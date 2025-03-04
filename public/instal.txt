@@ -1,0 +1,3 @@
+npm install -D prettier prettier-plugin-tailwindcss
+npm i react-router-dom
+npm i react-icons
