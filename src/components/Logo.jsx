@@ -7,7 +7,7 @@ const LogoDiv = ({ children }) => {
 };
 
 const Img = (props) => {
-  return <img className="h-24 w-auto" {...props} />;
+  return <img className="h-24 w-auto rounded-xl" {...props} />;
 };
 
 function Logo() {

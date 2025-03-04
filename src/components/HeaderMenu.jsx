@@ -15,7 +15,7 @@ function HeaderMenu() {
     <HeaderMenuDiv>
       <li>
         <ButtonIcon onClick={() => navigate("/account")}>
-          <HiOutlineUser />
+          <HiOutlineUser size={22} />
         </ButtonIcon>
       </li>
       {/* <li>

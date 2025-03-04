@@ -2,10 +2,10 @@ import { NavLink } from "react-router-dom";
 import {
   HiOutlineHome,
   HiMiniCalendarDays,
-  HiOutlineHomeModern,
   HiOutlineUsers,
   HiOutlineCog6Tooth,
 } from "react-icons/hi2";
+import { LiaHorseHeadSolid } from "react-icons/lia";
 
 const NavList = ({ children }) => {
   return <ul className="flex flex-col gap-2">{children}</ul>;
@@ -40,7 +40,7 @@ function MainNav() {
         </li>
         <li>
           <LinkDiv to="/rides">
-            <HiOutlineHomeModern className="hover:text-brand-600 active:text-brand-600 [&.active]:text-brand-600 h-6 w-6 text-gray-400 transition-all duration-300" />
+            <LiaHorseHeadSolid className="hover:text-brand-600 active:text-brand-600 [&.active]:text-brand-600 h-6 w-6 text-gray-400 transition-all duration-300" />
             <span>Jazdy</span>
           </LinkDiv>
         </li>
