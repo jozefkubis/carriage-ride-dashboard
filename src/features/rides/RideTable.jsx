@@ -25,7 +25,7 @@ function RideTable() {
     data: rides,
     error,
   } = useQuery({
-    queryKey: ["cride"],
+    queryKey: ["ride"],
     queryFn: getRides,
   });
 

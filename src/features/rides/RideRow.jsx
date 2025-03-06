@@ -1,4 +1,6 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatCurrency } from "../../utils/helpers";
+import { deleteRide } from "../../services/apiRides";
 
 const TableRow = ({ children }) => {
   return (
@@ -51,9 +53,21 @@ const TotalPrice = ({ children }) => {
 };
 
 function RideRow({ ride }) {
-  const { name, regularPrice, discount, description, image } = ride;
+  const { id: rideId, name, regularPrice, discount, description, image } = ride;
+
+  const queryClient = useQueryClient();
 
   const totalPrice = (regularPrice - discount).toFixed(2);
+
+  const { isLoading: isDeleting, mutate } = useMutation({
+    // mutationFn: (id) => deleteRide(id),
+    mutationFn: deleteRide,
+    onSuccess: () => {
+      alert("Jazda úspešne odstránená");
+      queryClient.invalidateQueries({ queryKey: ["ride"] });
+    },
+    onError: (err) => alert(err.message),
+  });
 
   return (
     <TableRow>
@@ -63,7 +77,9 @@ function RideRow({ ride }) {
       <Discount>{formatCurrency(discount)}</Discount>
       <TotalPrice>{formatCurrency(totalPrice)}</TotalPrice>
       <Description>{description}</Description>
-      <button>Delete</button>
+      <button onClick={() => mutate(rideId)} disabled={isDeleting}>
+        Delete
+      </button>
     </TableRow>
   );
 }
