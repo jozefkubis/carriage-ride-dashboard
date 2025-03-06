@@ -3,7 +3,8 @@ npm i react-router-dom
 npm i react-icons
 npm i @supabase/supabase-js
 npm install @tanstack/react-query
- npm i @tanstack/react-query-devtools
+npm i @tanstack/react-query-devtools
+npm i date-fns
 
 
-npm install -D prettier prettier-plugin-tailwindcss react-router-dom react-icons @supabase/supabase-js @tanstack/react-query @tanstack/react-query-devtools
+npm install -D prettier prettier-plugin-tailwindcss react-router-dom react-icons @supabase/supabase-js @tanstack/react-query @tanstack/react-query-devtools date-fns
