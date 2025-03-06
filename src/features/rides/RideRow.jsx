@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatCurrency } from "../../utils/helpers";
 import { deleteRide } from "../../services/apiRides";
+import toast from "react-hot-toast";
 
 const TableRow = ({ children }) => {
   return (
@@ -63,10 +64,10 @@ function RideRow({ ride }) {
     // mutationFn: (id) => deleteRide(id),
     mutationFn: deleteRide,
     onSuccess: () => {
-      alert("Jazda úspešne odstránená");
+      toast.success("Jazda úspešne odstránená");
       queryClient.invalidateQueries({ queryKey: ["ride"] });
     },
-    onError: (err) => alert(err.message),
+    onError: (err) => toast.error(err.message),
   });
 
   return (
