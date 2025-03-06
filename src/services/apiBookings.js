@@ -1,4 +1,4 @@
-import { getToday } from "../utils/helpers";
+import { getToday } from "../../starter/utils/helpers";
 import supabase from "./supabase";
 
 export async function getBooking(id) {
@@ -55,7 +55,7 @@ export async function getStaysTodayActivity() {
     .from("bookings")
     .select("*, guests(fullName, nationality, countryFlag)")
     .or(
-      `and(status.eq.unconfirmed,startDate.eq.${getToday()}),and(status.eq.checked-in,endDate.eq.${getToday()})`
+      `and(status.eq.unconfirmed,startDate.eq.${getToday()}),and(status.eq.checked-in,endDate.eq.${getToday()})`,
     )
     .order("created_at");
 

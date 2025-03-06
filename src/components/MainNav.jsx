@@ -15,7 +15,7 @@ const LinkDiv = ({ children, ...props }) => {
   return (
     <NavLink
       {...props}
-      className="flex items-center gap-3 p-3 text-lg font-medium text-gray-600 transition-all duration-300 hover:rounded-sm hover:bg-gray-50 hover:text-gray-800 active:rounded-sm active:bg-gray-50 active:text-gray-800 [&.active]:rounded-sm [&.active]:bg-gray-50 [&.active]:text-gray-800"
+      className="flex items-center gap-3 p-3 text-sm font-medium text-gray-600 transition-all duration-300 hover:rounded-sm hover:bg-gray-50 hover:text-gray-800 active:rounded-sm active:bg-gray-50 active:text-gray-800 [&.active]:rounded-sm [&.active]:bg-gray-50 [&.active]:text-gray-800"
     >
       {children}
     </NavLink>
