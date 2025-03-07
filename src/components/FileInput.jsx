@@ -1,25 +1,11 @@
-import styled from "styled-components";
-
-const FileInput = styled.input`
-  font-size: 1.4rem;
-  border-radius: var(--border-radius-sm);
-
-  &::file-selector-button {
-    font: inherit;
-    font-weight: 500;
-    padding: 0.8rem 1.2rem;
-    margin-right: 1.2rem;
-    border-radius: var(--border-radius-sm);
-    border: none;
-    color: var(--color-brand-50);
-    background-color: var(--color-brand-600);
-    cursor: pointer;
-    transition: color 0.2s, background-color 0.2s;
-
-    &:hover {
-      background-color: var(--color-brand-700);
-    }
-  }
-`;
+const FileInput = (props) => {
+  return (
+    <input
+      type="file"
+      className="file:text-brand-50 file:bg-brand-600 hover:file:bg-brand-700 rounded-md text-sm file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:px-4 file:py-2 file:font-medium file:transition-colors file:duration-200"
+      {...props}
+    />
+  );
+};
 
 export default FileInput;

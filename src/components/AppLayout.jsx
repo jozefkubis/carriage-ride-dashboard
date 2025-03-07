@@ -7,7 +7,7 @@ const AppLayoutDiv = ({ children }) => {
 };
 
 const Main = ({ children }) => {
-  return <main className="h-screen w-full bg-gray-50">{children}</main>;
+  return <main className="h-screen w-full bg-gray-50 px-10">{children}</main>;
 };
 
 const Container = ({ children }) => {

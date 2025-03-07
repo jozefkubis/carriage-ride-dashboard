@@ -1,89 +1,87 @@
-import styled from "styled-components";
+import Input from "../../components/Input";
+import { Form } from "../../components/Forms";
+import Button from "../../components/Button";
+import FileInput from "../../components/FileInput";
+import Textarea from "../../components/Textarea";
+import { useForm } from "react-hook-form";
 
-import Input from "../../ui/Input";
-import Form from "../../ui/Form";
-import Button from "../../ui/Button";
-import FileInput from "../../ui/FileInput";
-import Textarea from "../../ui/Textarea";
-
-const FormRow = styled.div`
-  display: grid;
-  align-items: center;
-  grid-template-columns: 24rem 1fr 1.2fr;
-  gap: 2.4rem;
-
-  padding: 1.2rem 0;
-
-  &:first-child {
-    padding-top: 0;
-  }
-
-  &:last-child {
-    padding-bottom: 0;
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-
-  &:has(button) {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.2rem;
-  }
-`;
-
-const Label = styled.label`
-  font-weight: 500;
-`;
-
-const Error = styled.span`
-  font-size: 1.4rem;
-  color: var(--color-red-700);
-`;
-
-function CreateCabinForm() {
+const FormRow = ({ children }) => {
   return (
-    <Form>
+    <div className="grid grid-cols-[24rem_1fr_1.2fr] items-center gap-6 border-b py-3 last:border-b-0">
+      {children}
+    </div>
+  );
+};
+
+const ButtonRow = ({ children }) => {
+  return (
+    <div className="flex justify-end gap-3 border-none p-3">{children}</div>
+  );
+};
+
+const Label = ({ htmlFor, children }) => {
+  return (
+    <label htmlFor={htmlFor} className="font-medium">
+      {children}
+    </label>
+  );
+};
+
+const Error = ({ children }) => {
+  return <span className="text-sm text-red-700">{children}</span>;
+};
+
+function CreateRideForm() {
+  const { register, handleSubmit } = useForm();
+
+  function onSubmit(data) {
+    console.log(data);
+  }
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow>
-        <Label htmlFor="name">Cabin name</Label>
-        <Input type="text" id="name" />
+        <Label htmlFor="name">Jazda</Label>
+        <Input type="text" id="name" {...register("name")} />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input type="number" id="maxCapacity" />
+        <Label htmlFor="regularPrice">Cena</Label>
+        <Input type="number" id="regularPrice" {...register("regularPrice")} />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="regularPrice">Regular price</Label>
-        <Input type="number" id="regularPrice" />
+        <Label htmlFor="discount">Zľava</Label>
+        <Input
+          type="number"
+          id="discount"
+          defaultValue={0}
+          {...register("discount")}
+        />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="discount">Discount</Label>
-        <Input type="number" id="discount" defaultValue={0} />
+        <Label htmlFor="description">Popis</Label>
+        <Textarea
+          id="description"
+          defaultValue=""
+          {...register("description")}
+        />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="description">Description for website</Label>
-        <Textarea type="number" id="description" defaultValue="" />
-      </FormRow>
-
-      <FormRow>
-        <Label htmlFor="image">Cabin photo</Label>
+        <Label htmlFor="image">Obrázok</Label>
         <FileInput id="image" accept="image/*" />
       </FormRow>
 
-      <FormRow>
-        {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
-          Cancel
+      <ButtonRow>
+        <Button variant="secondary" type="reset">
+          Reset
         </Button>
-        <Button>Edit cabin</Button>
-      </FormRow>
+        <Button type="submit">Pridaj jazdu</Button>
+      </ButtonRow>
     </Form>
   );
 }
 
-export default CreateCabinForm;
+export default CreateRideForm;

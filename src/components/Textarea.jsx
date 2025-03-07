@@ -1,13 +1,10 @@
-import styled from "styled-components";
-
-const Textarea = styled.textarea`
-  padding: 0.8rem 1.2rem;
-  border: 1px solid var(--color-grey-300);
-  border-radius: 5px;
-  background-color: var(--color-grey-0);
-  box-shadow: var(--shadow-sm);
-  width: 100%;
-  height: 8rem;
-`;
+const Textarea = (props) => {
+  return (
+    <textarea
+      className="h-32 w-full resize-none rounded-md border border-gray-300 bg-gray-50 p-2 shadow-sm"
+      {...props}
+    />
+  );
+};
 
 export default Textarea;
