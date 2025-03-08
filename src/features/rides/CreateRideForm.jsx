@@ -4,6 +4,9 @@ import Button from "../../components/Button";
 import FileInput from "../../components/FileInput";
 import Textarea from "../../components/Textarea";
 import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { createRide } from "../../services/apiRides";
 
 const FormRow = ({ children }) => {
   return (
@@ -32,10 +35,21 @@ const Error = ({ children }) => {
 };
 
 function CreateRideForm() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading: isCreating } = useMutation({
+    mutationFn: createRide,
+    onSuccess: () => {
+      toast.success("Jazda bola úslešne pridaná");
+      queryClient.invalidateQueries({ queryKey: ["ride"] });
+      reset();
+    },
+    onError: (err) => toast.error(err.message),
+  });
 
   function onSubmit(data) {
-    console.log(data);
+    mutate(data);
   }
 
   return (
@@ -78,7 +92,9 @@ function CreateRideForm() {
         <Button variant="secondary" type="reset">
           Reset
         </Button>
-        <Button type="submit">Pridaj jazdu</Button>
+        <Button disabled={isCreating} type="submit">
+          Pridaj jazdu
+        </Button>
       </ButtonRow>
     </Form>
   );
