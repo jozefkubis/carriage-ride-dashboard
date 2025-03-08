@@ -27,31 +27,45 @@ export async function deleteRide(id) {
   return data;
 }
 
-// MARK: CREATE RIDE
-export async function createRide(newRide) {
+// MARK: CREATE-EDIT RIDE
+export async function createEditRide(newRide, id) {
+  const isUpdating = !!id; // Ak je ID, tak editujeme existujúcu jazdu
+  const existingImage = newRide.image?.startsWith?.(supabaseUrl);
+
+  // 1️⃣ Vytvorenie názvu obrázka a určenie cesty
   const imageName = `${Date.now()}-${newRide.image.name}`.replace(/\s/g, "-");
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/productPics/${imageName}`;
+  const imagePath = existingImage
+    ? newRide.image
+    : `${supabaseUrl}/storage/v1/object/public/productPics/${imageName}`;
 
-  // 1. Vytvorenie jazdy
-  const { data, error } = await supabase
-    .from("cride")
-    .insert([{ ...newRide, image: imagePath }]);
+  // 2️⃣ Príprava dotazu na vytvorenie alebo úpravu jazdy
+  let query = supabase.from("cride");
 
-  if (error) {
-    console.error(error);
-    throw new Error("Jazdu nie je možné vytvorit");
+  if (isUpdating) {
+    query = query.update({ ...newRide, image: imagePath }).eq("id", id);
+  } else {
+    query = query.insert([{ ...newRide, image: imagePath }]);
   }
 
-  // 2. Pridanie obrazku
-  const { error: storageError } = await supabase.storage
-    .from("productPics")
-    .upload(imageName, newRide.image);
+  const { data, error } = await query.select().single();
 
-  // 3. Vymazanie jazdy ak sa vyskytol error pocas naharavania image
-  if (storageError) {
-    await supabase.from("cride").delete().eq("id", data[0].id);
-    console.error(storageError);
-    throw new Error("Obrázok nie je možné nahrať");
+  if (error) {
+    console.error("❌ Chyba pri ukladaní jazdy:", error);
+    throw new Error("Jazdu nie je možné vytvoriť");
+  }
+
+  // 3️⃣ Ak je obrázok nový, nahráme ho do Supabase Storage
+  if (!existingImage) {
+    const { error: storageError } = await supabase.storage
+      .from("productPics")
+      .upload(imageName, newRide.image);
+
+    // 4️⃣ Ak sa obrázok nepodarí nahrať, zmažeme vytvorenú jazdu
+    if (storageError) {
+      await supabase.from("cride").delete().eq("id", data.id);
+      console.error("❌ Chyba pri nahrávaní obrázka:", storageError);
+      throw new Error("Obrázok nie je možné nahrať");
+    }
   }
 
   return data;

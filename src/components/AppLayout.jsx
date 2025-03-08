@@ -8,7 +8,7 @@ const AppLayoutDiv = ({ children }) => {
 
 const Main = ({ children }) => {
   return (
-    <main className="h-screen w-full overflow-x-scroll bg-gray-50 px-10">
+    <main className="h-screen w-full overflow-y-scroll bg-gray-50 px-10">
       {children}
     </main>
   );
