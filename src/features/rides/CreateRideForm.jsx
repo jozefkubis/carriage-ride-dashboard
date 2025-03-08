@@ -7,14 +7,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { createRide } from "../../services/apiRides";
-
-const FormRow = ({ children }) => {
-  return (
-    <div className="grid grid-cols-[24rem_1fr_1.2fr] items-center gap-6 border-b py-3 last:border-b-0">
-      {children}
-    </div>
-  );
-};
+import FormRow from "../../components/FormRow";
 
 const ButtonRow = ({ children }) => {
   return (
@@ -22,26 +15,16 @@ const ButtonRow = ({ children }) => {
   );
 };
 
-const Label = ({ htmlFor, children }) => {
-  return (
-    <label htmlFor={htmlFor} className="font-medium">
-      {children}
-    </label>
-  );
-};
-
-const Error = ({ children }) => {
-  return <span className="text-sm text-red-700">{children}</span>;
-};
-
 function CreateRideForm() {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, getValues, formState } = useForm();
+  const { errors } = formState;
+
   const queryClient = useQueryClient();
 
   const { mutate, isLoading: isCreating } = useMutation({
     mutationFn: createRide,
     onSuccess: () => {
-      toast.success("Jazda bola úslešne pridaná");
+      toast.success("Jazda bola úspešne pridaná");
       queryClient.invalidateQueries({ queryKey: ["ride"] });
       reset();
     },
@@ -52,39 +35,55 @@ function CreateRideForm() {
     mutate(data);
   }
 
+  function onError(error) {
+    console.log(error.message);
+  }
+
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow>
-        <Label htmlFor="name">Jazda</Label>
-        <Input type="text" id="name" {...register("name")} />
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+      <FormRow label="Jazda" error={errors?.name?.message}>
+        <Input
+          type="text"
+          id="name"
+          disabled={isCreating}
+          {...register("name", { required: "Toto pole je povinné" })}
+        />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="regularPrice">Cena</Label>
-        <Input type="number" id="regularPrice" {...register("regularPrice")} />
+      <FormRow label="Cena" error={errors?.regularPrice?.message}>
+        <Input
+          type="number"
+          id="regularPrice"
+          disabled={isCreating}
+          {...register("regularPrice", { required: "Toto pole je povinné" })}
+        />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="discount">Zľava</Label>
+      <FormRow label="Zľava" error={errors?.discount?.message}>
         <Input
           type="number"
           id="discount"
           defaultValue={0}
-          {...register("discount")}
+          disabled={isCreating}
+          {...register("discount", {
+            required: "Toto pole je povinné",
+            validate: (value) =>
+              value <= getValues().regularPrice ||
+              "Zľava nemôže byť viac ako 100% z ceny",
+          })}
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="description">Popis</Label>
+      <FormRow label="Popis" error={errors?.description?.message}>
         <Textarea
           id="description"
           defaultValue=""
-          {...register("description")}
+          disabled={isCreating}
+          {...register("description", { required: "Toto pole je povinné" })}
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="image">Obrázok</Label>
+      <FormRow label="Obrázok">
         <FileInput id="image" accept="image/*" />
       </FormRow>
 
