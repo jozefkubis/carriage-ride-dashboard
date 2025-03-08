@@ -32,7 +32,7 @@ function CreateRideForm() {
   });
 
   function onSubmit(data) {
-    mutate(data);
+    mutate({ ...data, image: data.image[0] });
   }
 
   function onError(error) {
@@ -84,7 +84,11 @@ function CreateRideForm() {
       </FormRow>
 
       <FormRow label="Obrázok">
-        <FileInput id="image" accept="image/*" />
+        <FileInput
+          id="image"
+          accept="image/*"
+          {...register("image", { required: "Toto pole je povinné" })}
+        />
       </FormRow>
 
       <ButtonRow>
