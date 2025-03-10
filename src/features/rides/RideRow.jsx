@@ -1,10 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { formatCurrency } from "../../utils/helpers";
-import { deleteRide } from "../../services/apiRides";
-import toast from "react-hot-toast";
-import Button from "../../components/Button";
 import { useState } from "react";
+import Button from "../../components/Button";
+import { formatCurrency } from "../../utils/helpers";
 import CreateRideForm from "./CreateRideForm";
+import { useDeleteRide } from "./useDeleteRide";
 
 const TableRow = ({ children }) => {
   return (
@@ -58,22 +56,11 @@ const TotalPrice = ({ children }) => {
 
 function RideRow({ ride }) {
   const [showFrom, setShowFrom] = useState(false);
+  const { isDeleting, deleteRide } = useDeleteRide();
 
   const { id: rideId, name, regularPrice, discount, description, image } = ride;
 
-  const queryClient = useQueryClient();
-
   const totalPrice = (regularPrice - discount).toFixed(2);
-
-  const { isLoading: isDeleting, mutate } = useMutation({
-    // mutationFn: (id) => deleteRide(id),
-    mutationFn: deleteRide,
-    onSuccess: () => {
-      toast.success("Jazda úspešne odstránená");
-      queryClient.invalidateQueries({ queryKey: ["ride"] });
-    },
-    onError: (err) => toast.error(err.message),
-  });
 
   return (
     <>
@@ -81,7 +68,11 @@ function RideRow({ ride }) {
         {<Img src={image} alt={ride.name} />}
         <Ride>{name}</Ride>
         <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
+        {discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
         <TotalPrice>{formatCurrency(totalPrice)}</TotalPrice>
         <Description>{description}</Description>
         <div className="flex flex-col gap-1">
@@ -90,7 +81,7 @@ function RideRow({ ride }) {
           </Button>
           <Button
             size="small"
-            onClick={() => mutate(rideId)}
+            onClick={() => deleteRide(rideId)}
             disabled={isDeleting}
           >
             Vyzmazať

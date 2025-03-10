@@ -1,13 +1,12 @@
-import Input from "../../components/Input";
-import { Form } from "../../components/Forms";
+import { useForm } from "react-hook-form";
 import Button from "../../components/Button";
 import FileInput from "../../components/FileInput";
-import Textarea from "../../components/Textarea";
-import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
-import { createEditRide } from "../../services/apiRides";
 import FormRow from "../../components/FormRow";
+import { Form } from "../../components/Forms";
+import Input from "../../components/Input";
+import Textarea from "../../components/Textarea";
+import { useCreateRide } from "./useCreateRide";
+import { useEditRide } from "./useEditRide";
 
 const ButtonRow = ({ children }) => {
   return (
@@ -18,42 +17,24 @@ const ButtonRow = ({ children }) => {
 function CreateRideForm({ rideToEdit = {} }) {
   const { id: editId, ...editValues } = rideToEdit;
   const isEditSession = Boolean(editId);
+  const { isCreating, createRide } = useCreateRide();
+  const { isEditing, editRide } = useEditRide();
 
+  const isWorking = isCreating || isEditing;
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
   });
   const { errors } = formState;
 
-  const queryClient = useQueryClient();
-
-  const { mutate: createRide, isLoading: isCreating } = useMutation({
-    mutationFn: createEditRide,
-    onSuccess: () => {
-      toast.success("Jazda bola úspešne pridaná");
-      queryClient.invalidateQueries({ queryKey: ["ride"] });
-      reset();
-    },
-    onError: (err) => toast.error(err.message),
-  });
-
-  const { mutate: editRide, isLoading: isEditing } = useMutation({
-    mutationFn: ({ newRideData, id }) => createEditRide(newRideData, id),
-    onSuccess: () => {
-      toast.success("Jazda bola úspešne upravená");
-      queryClient.invalidateQueries({ queryKey: ["ride"] });
-      reset();
-    },
-    onError: (err) => toast.error(err.message),
-  });
-
-  const isWorking = isCreating || isEditing;
-
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
     if (isEditSession)
-      editRide({ newRideData: { ...data, image }, id: editId });
-    else createRide({ ...data, image });
+      editRide(
+        { newRideData: { ...data, image }, id: editId },
+        { onSuccess: () => reset() },
+      );
+    else createRide({ ...data, image: image }, { onSuccess: () => reset() });
   }
 
   function onError(error) {
@@ -99,7 +80,6 @@ function CreateRideForm({ rideToEdit = {} }) {
         <Textarea
           id="description"
           defaultValue=""
-          disabled={isWorking}
           {...register("description", { required: "Toto pole je povinné" })}
         />
       </FormRow>

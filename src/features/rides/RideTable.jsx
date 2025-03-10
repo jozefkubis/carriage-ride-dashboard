@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { getRides } from "../../services/apiRides";
 import Spinner from "../../components/Spinner";
 import RideRow from "./RideRow";
+import { useRides } from "./useRides";
 
 const Table = ({ children }) => {
   return (
@@ -20,14 +19,7 @@ const TableHeader = ({ children }) => {
 };
 
 function RideTable() {
-  const {
-    isLoading,
-    data: rides,
-    error,
-  } = useQuery({
-    queryKey: ["ride"],
-    queryFn: getRides,
-  });
+  const { isLoading, rides } = useRides();
 
   if (isLoading) return <Spinner />;
 
