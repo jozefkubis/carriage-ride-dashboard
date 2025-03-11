@@ -1,7 +1,7 @@
 const Form = ({ children, ...props }) => {
   return (
     <form
-      className="overflow-hidden rounded-md border border-gray-200 bg-gray-50 p-6 text-sm"
+      className="overflow-hidden rounded-md border border-gray-200 bg-white p-6 text-sm"
       {...props}
     >
       {children}
@@ -11,7 +11,7 @@ const Form = ({ children, ...props }) => {
 
 const ModalForm = ({ children, ...props }) => {
   return (
-    <form className="w-[80rem] overflow-hidden text-sm" {...props}>
+    <form className="w-[80rem] overflow-hidden bg-white text-sm" {...props}>
       {children}
     </form>
   );

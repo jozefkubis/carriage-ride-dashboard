@@ -7,5 +7,5 @@ export const RowHorizontal = ({ children }) => {
 };
 
 export const RowVertical = ({ children }) => {
-  return <div className="flex flex-col gap-4 px-6">{children}</div>;
+  return <div className="flex flex-col gap-4 px-6 py-6">{children}</div>;
 };
