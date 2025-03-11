@@ -1,12 +1,10 @@
-import { useState } from "react";
-import Button from "../components/Button";
 import Heading from "../components/Heading";
 import { RowHorizontal, RowVertical } from "../components/Rows";
+import AddRide from "../features/rides/AddRide";
 import RideTable from "../features/rides/RideTable";
-import CreateRideForm from "../features/rides/CreateRideForm";
 
 function Rides() {
-  const [showForm, setShowForm] = useState(false);
+  // const [showForm, setShowForm] = useState(false);
 
   return (
     <>
@@ -18,14 +16,7 @@ function Rides() {
       <RowVertical>
         <RideTable />
 
-        <Button
-          size="medium"
-          variant="primary"
-          onClick={() => setShowForm((show) => !show)}
-        >
-          Pridaj novú jazdu
-        </Button>
-        {showForm && <CreateRideForm />}
+        <AddRide />
       </RowVertical>
     </>
   );

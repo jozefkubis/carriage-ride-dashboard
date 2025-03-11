@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import Button from "../../components/Button";
 import FileInput from "../../components/FileInput";
 import FormRow from "../../components/FormRow";
-import { Form } from "../../components/Forms";
+import { ModalForm } from "../../components/Forms";
 import Input from "../../components/Input";
 import Textarea from "../../components/Textarea";
 import { useCreateRide } from "./useCreateRide";
@@ -14,7 +14,7 @@ const ButtonRow = ({ children }) => {
   );
 };
 
-function CreateRideForm({ rideToEdit = {} }) {
+function CreateRideForm({ rideToEdit = {}, onClose }) {
   const { id: editId, ...editValues } = rideToEdit;
   const isEditSession = Boolean(editId);
   const { isCreating, createRide } = useCreateRide();
@@ -32,7 +32,12 @@ function CreateRideForm({ rideToEdit = {} }) {
     if (isEditSession)
       editRide(
         { newRideData: { ...data, image }, id: editId },
-        { onSuccess: () => reset() },
+        {
+          onSuccess: () => {
+            reset();
+            onClose?.();
+          },
+        },
       );
     else createRide({ ...data, image: image }, { onSuccess: () => reset() });
   }
@@ -42,7 +47,7 @@ function CreateRideForm({ rideToEdit = {} }) {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <ModalForm onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow label="Jazda" error={errors?.name?.message}>
         <Input
           type="text"
@@ -95,14 +100,14 @@ function CreateRideForm({ rideToEdit = {} }) {
       </FormRow>
 
       <ButtonRow>
-        <Button variant="secondary" type="reset">
+        <Button variant="secondary" type="reset" onClick={() => onClose?.()}>
           Reset
         </Button>
         <Button disabled={isWorking} type="submit">
           {isEditSession ? "Uprav jazdu" : "Pridaj jazdu"}
         </Button>
       </ButtonRow>
-    </Form>
+    </ModalForm>
   );
 }
 
