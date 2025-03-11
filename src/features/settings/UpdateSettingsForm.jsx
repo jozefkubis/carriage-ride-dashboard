@@ -35,7 +35,7 @@ function UpdateSettingsForm() {
         <Input
           type="tel"
           id="phone"
-          defaultValue={`+421 ${phone}`}
+          defaultValue={phone}
           disabled={isUpdating}
           onBlur={(e) => handleUpdate(e, "phone")}
         />
