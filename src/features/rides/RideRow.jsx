@@ -5,21 +5,14 @@ import CreateRideForm from "./CreateRideForm";
 import { useDeleteRide } from "./useDeleteRide";
 import Modal from "../../components/Modal";
 import ConfirmDelete from "../../components/ConfirmDelete";
-
-const TableRow = ({ children }) => {
-  return (
-    <div className="grid grid-cols-[0.6fr_1.5fr_1fr_1fr_1fr_2fr_0.5fr] items-center gap-6 border-b border-gray-200 p-4 last:border-b-0">
-      {children}
-    </div>
-  );
-};
+import Table from "../../components/Table";
 
 const Img = ({ src, alt }) => {
   return (
     <img
       src={src}
       alt={alt}
-      className="block aspect-[3/2] w-16 -translate-x-2 scale-150 object-cover object-center"
+      className="border-gray-100-translate-x-2 block aspect-[3/2] w-24 flex-none scale-125 rounded-md border object-cover object-center"
     />
   );
 };
@@ -67,7 +60,7 @@ function RideRow({ ride }) {
 
   return (
     <>
-      <TableRow>
+      <Table.Row>
         {<Img src={image} alt={ride.name} />}
         <Ride>{name}</Ride>
         <Price>{formatCurrency(regularPrice)}</Price>
@@ -91,7 +84,7 @@ function RideRow({ ride }) {
             Vyzmazať
           </Button>
         </div>
-      </TableRow>
+      </Table.Row>
 
       {isOpenModal && (
         <Modal onClose={() => setIsOpenModal(false)}>
