@@ -71,8 +71,12 @@ function RideRow({ ride }) {
         )}
         <TotalPrice>{formatCurrency(totalPrice)}</TotalPrice>
         <Description>{description}</Description>
-        <div className="flex flex-col gap-1">
-          <Button size="small" onClick={() => setIsOpenModal((show) => !show)}>
+        <div className="flex flex-col gap-1 px-4">
+          <Button
+            size="small"
+            variant="secondary"
+            onClick={() => setIsOpenModal((show) => !show)}
+          >
             Upraviť
           </Button>
 

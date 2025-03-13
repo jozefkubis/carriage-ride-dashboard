@@ -89,12 +89,14 @@ function Row({ children }) {
     </StyledRow>
   );
 }
-// function Body({ children }) {}
+function Body({ render, data }) {
+  return <StyledBody>{data.map(render)}</StyledBody>;
+}
 // function Footer({ children }) {}
 
 Table.Header = Header;
 Table.Row = Row;
-// Table.Body = Body;
+Table.Body = Body;
 Table.Footer = Footer;
 
 export default Table;

@@ -20,9 +20,10 @@ function RideTable() {
         <div></div>
       </Table.Header>
 
-      {rides.map((ride) => (
-        <RideRow key={ride.id} ride={ride} />
-      ))}
+      <Table.Body
+        data={rides}
+        render={(ride) => <RideRow key={ride.id} ride={ride} />}
+      />
     </Table>
   );
 }
