@@ -3,6 +3,7 @@ import Button from "../../components/Button";
 import { formatCurrency } from "../../utils/helpers";
 import CreateRideForm from "./CreateRideForm";
 import { useDeleteRide } from "./useDeleteRide";
+import Modal from "../../components/Modal";
 
 const TableRow = ({ children }) => {
   return (
@@ -55,7 +56,8 @@ const TotalPrice = ({ children }) => {
 };
 
 function RideRow({ ride }) {
-  const [showFrom, setShowFrom] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   const { isDeleting, deleteRide } = useDeleteRide();
 
   const { id: rideId, name, regularPrice, discount, description, image } = ride;
@@ -76,7 +78,7 @@ function RideRow({ ride }) {
         <TotalPrice>{formatCurrency(totalPrice)}</TotalPrice>
         <Description>{description}</Description>
         <div className="flex flex-col gap-1">
-          <Button size="small" onClick={() => setShowFrom((show) => !show)}>
+          <Button size="small" onClick={() => setIsOpenModal((show) => !show)}>
             Upraviť
           </Button>
           <Button
@@ -88,7 +90,14 @@ function RideRow({ ride }) {
           </Button>
         </div>
       </TableRow>
-      {showFrom && <CreateRideForm rideToEdit={ride} />}
+      {isOpenModal && (
+        <Modal onClose={() => setIsOpenModal(false)}>
+          <CreateRideForm
+            rideToEdit={ride}
+            onClose={() => setIsOpenModal(false)}
+          />
+        </Modal>
+      )}
     </>
   );
 }
