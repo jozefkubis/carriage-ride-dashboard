@@ -4,6 +4,7 @@ import { formatCurrency } from "../../utils/helpers";
 import CreateRideForm from "./CreateRideForm";
 import { useDeleteRide } from "./useDeleteRide";
 import Modal from "../../components/Modal";
+import ConfirmDelete from "../../components/ConfirmDelete";
 
 const TableRow = ({ children }) => {
   return (
@@ -57,7 +58,7 @@ const TotalPrice = ({ children }) => {
 
 function RideRow({ ride }) {
   const [isOpenModal, setIsOpenModal] = useState(false);
-
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const { isDeleting, deleteRide } = useDeleteRide();
 
   const { id: rideId, name, regularPrice, discount, description, image } = ride;
@@ -81,20 +82,33 @@ function RideRow({ ride }) {
           <Button size="small" onClick={() => setIsOpenModal((show) => !show)}>
             Upraviť
           </Button>
+
           <Button
             size="small"
-            onClick={() => deleteRide(rideId)}
+            onClick={() => setIsOpenDeleteModal((show) => !show)}
             disabled={isDeleting}
           >
             Vyzmazať
           </Button>
         </div>
       </TableRow>
+
       {isOpenModal && (
         <Modal onClose={() => setIsOpenModal(false)}>
           <CreateRideForm
             rideToEdit={ride}
             onClose={() => setIsOpenModal(false)}
+          />
+        </Modal>
+      )}
+
+      {isOpenDeleteModal && (
+        <Modal onClose={() => setIsOpenDeleteModal(false)}>
+          <ConfirmDelete
+            resourceName="jazdu"
+            onConfirm={() => deleteRide(rideId)}
+            disabled={isDeleting}
+            onClose={() => setIsOpenDeleteModal(false)}
           />
         </Modal>
       )}

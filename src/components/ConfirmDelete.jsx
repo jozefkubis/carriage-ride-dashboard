@@ -1,40 +1,29 @@
-import styled from "styled-components";
 import Button from "./Button";
 import Heading from "./Heading";
 
-const StyledConfirmDelete = styled.div`
-  width: 40rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
+const StyledConfirmDelete = ({ children }) => {
+  return <div className="flex w-[30rem] flex-col gap-5">{children}</div>;
+};
 
-  & p {
-    color: var(--color-grey-500);
-    margin-bottom: 1.2rem;
-  }
-
-  & div {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.2rem;
-  }
-`;
-
-function ConfirmDelete({ resourceName, onConfirm, disabled }) {
+function ConfirmDelete({ resourceName, onConfirm, disabled, onClose }) {
   return (
     <StyledConfirmDelete>
-      <Heading as="h3">Delete {resourceName}</Heading>
-      <p>
-        Are you sure you want to delete this {resourceName} permanently? This
-        action cannot be undone.
+      <Heading type="h3">Vymazať {resourceName}</Heading>
+      <p className="mb-5 text-gray-500">
+        Ste si istý, že chcete vymazať túto {resourceName}?
       </p>
 
-      <div>
-        <Button variation="secondary" disabled={disabled}>
-          Cancel
+      <div className="flex justify-end gap-5">
+        <Button
+          size="medium"
+          variant="secondary"
+          disabled={disabled}
+          onClick={() => onClose?.()}
+        >
+          Zrušiť
         </Button>
-        <Button variation="danger" disabled={disabled}>
-          Delete
+        <Button variant="danger" disabled={disabled} onClick={onConfirm}>
+          Vymazať
         </Button>
       </div>
     </StyledConfirmDelete>

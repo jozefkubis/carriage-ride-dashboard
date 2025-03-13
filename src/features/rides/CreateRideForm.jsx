@@ -39,7 +39,16 @@ function CreateRideForm({ rideToEdit = {}, onClose }) {
           },
         },
       );
-    else createRide({ ...data, image: image }, { onSuccess: () => reset() });
+    else
+      createRide(
+        { ...data, image: image },
+        {
+          onSuccess: () => {
+            reset();
+            onClose?.();
+          },
+        },
+      );
   }
 
   function onError(error) {
