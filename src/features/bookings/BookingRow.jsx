@@ -1,38 +1,23 @@
-import styled from "styled-components";
 import { format, isToday } from "date-fns";
+import Tag from "../../components/Tag";
+import Table from "../../components/Table";
+import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
 
-import Tag from "../../ui/Tag";
-import Table from "../../ui/Table";
+const Ride = ({ children }) => {
+  return (
+    <div className="font-sono text-[1.6rem] font-semibold text-gray-600">
+      {children}
+    </div>
+  );
+};
 
-import { formatCurrency } from "../../utils/helpers";
-import { formatDistanceFromNow } from "../../utils/helpers";
+const Stacked = ({ children }) => {
+  return <div className="flex flex-col gap-[0.2rem]">{children}</div>;
+};
 
-const Cabin = styled.div`
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--color-grey-600);
-  font-family: "Sono";
-`;
-
-const Stacked = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-
-  & span:first-child {
-    font-weight: 500;
-  }
-
-  & span:last-child {
-    color: var(--color-grey-500);
-    font-size: 1.2rem;
-  }
-`;
-
-const Amount = styled.div`
-  font-family: "Sono";
-  font-weight: 500;
-`;
+const Amount = ({ children }) => {
+  return <div className="font-sono font-medium">{children}</div>;
+};
 
 function BookingRow({
   booking: {
@@ -48,7 +33,7 @@ function BookingRow({
     cabins: { name: cabinName },
   },
 }) {
-  const statusToTagName = {
+  const guestIdToTagName = {
     unconfirmed: "blue",
     "checked-in": "green",
     "checked-out": "silver",
@@ -56,11 +41,11 @@ function BookingRow({
 
   return (
     <Table.Row>
-      <Cabin>{cabinName}</Cabin>
+      <Ride>{cabinName}</Ride>
 
       <Stacked>
-        <span>{guestName}</span>
-        <span>{email}</span>
+        <span className="font-medium">{guestName}</span>
+        <span className="text-[1.2rem] text-gray-500">{email}</span>
       </Stacked>
 
       <Stacked>
@@ -76,7 +61,7 @@ function BookingRow({
         </span>
       </Stacked>
 
-      <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+      <Tag type={guestIdToTagName[status]}>{status.replace("-", " ")}</Tag>
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
     </Table.Row>

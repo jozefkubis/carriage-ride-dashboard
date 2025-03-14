@@ -1,62 +1,94 @@
-import styled from "styled-components";
+import { createContext, useContext, useState } from "react";
+import { createPortal } from "react-dom";
+import { HiMiniEllipsisVertical } from "react-icons/hi2";
 
-const StyledMenu = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-`;
+const MenusContext = createContext();
 
-const StyledToggle = styled.button`
-  background: none;
-  border: none;
-  padding: 0.4rem;
-  border-radius: var(--border-radius-sm);
-  transform: translateX(0.8rem);
-  transition: all 0.2s;
+function Menus({ children }) {
+  const [openId, setOpenId] = useState("");
+  const [position, setPosition] = useState(null);
 
-  &:hover {
-    background-color: var(--color-grey-100);
+  const close = () => setOpenId("");
+  const open = setOpenId;
+
+  return (
+    <MenusContext.Provider
+      value={{ openId, close, open, position, setPosition }}
+    >
+      {children}
+    </MenusContext.Provider>
+  );
+}
+
+function Toggle({ id }) {
+  const { openId, close, open, setPosition } = useContext(MenusContext);
+
+  function handleClick(e) {
+    e.stopPropagation();
+
+    const rect = e.target.closest("button").getBoundingClientRect();
+    setPosition({
+      x: window.innerWidth - rect.width - rect.x,
+      y: rect.y + rect.height + 8,
+    });
+
+    openId === "" || openId !== id ? open(id) : close();
   }
 
-  & svg {
-    width: 2.4rem;
-    height: 2.4rem;
-    color: var(--color-grey-700);
+  return (
+    <button
+      onClick={handleClick}
+      className="translate-x-2 rounded-sm border-none bg-transparent p-1 transition duration-200 hover:bg-gray-100"
+    >
+      <HiMiniEllipsisVertical className="h-6 w-6 text-gray-700" />
+    </button>
+  );
+}
+
+function List({ id, children }) {
+  const { openId, position, close } = useContext(MenusContext);
+  // const ref = useOutsideClick(close, false);
+
+  if (openId !== id) return null;
+
+  return createPortal(
+    <ul
+      // ref={ref}
+      className="fixed z-50 rounded-md bg-white shadow-md"
+      style={{ right: `${position.x}px`, top: `${position.y}px` }}
+    >
+      {children}
+    </ul>,
+    document.body,
+  );
+}
+
+function Button({ children, icon, onClick }) {
+  const { close } = useContext(MenusContext);
+
+  function handleClick() {
+    onClick?.();
+    close();
   }
-`;
 
-const StyledList = styled.ul`
-  position: fixed;
+  return (
+    <li>
+      <button
+        onClick={handleClick}
+        className="flex w-full items-center gap-4 border-none bg-transparent px-6 py-3 text-left text-[1.4rem] transition duration-200 hover:bg-gray-100"
+      >
+        {icon}
+        <span>{children}</span>
+      </button>
+    </li>
+  );
+}
 
-  background-color: var(--color-grey-0);
-  box-shadow: var(--shadow-md);
-  border-radius: var(--border-radius-md);
+Menus.Menu = ({ children }) => (
+  <div className="flex items-center justify-end">{children}</div>
+);
+Menus.Toggle = Toggle;
+Menus.List = List;
+Menus.Button = Button;
 
-  right: ${(props) => props.position.x}px;
-  top: ${(props) => props.position.y}px;
-`;
-
-const StyledButton = styled.button`
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  padding: 1.2rem 2.4rem;
-  font-size: 1.4rem;
-  transition: all 0.2s;
-
-  display: flex;
-  align-items: center;
-  gap: 1.6rem;
-
-  &:hover {
-    background-color: var(--color-grey-50);
-  }
-
-  & svg {
-    width: 1.6rem;
-    height: 1.6rem;
-    color: var(--color-grey-400);
-    transition: all 0.3s;
-  }
-`;
+export default Menus;

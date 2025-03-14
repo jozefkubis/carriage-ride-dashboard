@@ -71,7 +71,7 @@ function RideRow({ ride }) {
         )}
         <TotalPrice>{formatCurrency(totalPrice)}</TotalPrice>
         <Description>{description}</Description>
-        <div className="flex flex-col gap-1 px-4">
+        <div className="flex flex-col items-end gap-2 px-4">
           <Button
             size="small"
             variant="secondary"

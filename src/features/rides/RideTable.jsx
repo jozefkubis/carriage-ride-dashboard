@@ -9,7 +9,7 @@ function RideTable() {
   if (isLoading) return <Spinner />;
 
   return (
-    <Table columns="1fr 1.5fr 1fr 1fr 1.5fr 2fr 1fr">
+    <Table columns="1fr 1.5fr 1fr 1fr 1.5fr 2fr 1.5fr">
       <Table.Header>
         <div></div>
         <div>jazda</div>
