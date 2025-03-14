@@ -1,20 +1,29 @@
 import BookingRow from "./BookingRow";
 import Table from "../../components/Table";
+import Empty from "../../components/Empty";
+import Spinner from "../../components/Spinner";
+import { useBookings } from "./useBookings";
 
 function BookingTable() {
-  const bookings = [];
+  const { isLoading, bookings } = useBookings();
+
+  if (isLoading) return <Spinner />;
+
+  if (!bookings.length) return <Empty resource="bookings" />;
 
   return (
-    // <Menus>
-    <Table columns="1.4fr 1fr 1fr 2.4fr 1.4fr 1.4fr 1.4fr 3.2rem">
+    <Table columns="1.5fr 1fr 0.5fr 1fr 2fr 1.4fr 1.4fr 1.4fr 1fr">
       <Table.Header>
         <div>Dátum</div>
+        <div>Čas</div>
         <div>Hostia</div>
-        <div>Status</div>
+        {/* <div>Status</div> */}
         <div>Poznámky</div>
         <div>Meno</div>
         <div>Tel</div>
         <div>Email</div>
+        <div>Jazda</div>
+        <div>Cena spolu</div>
         <div></div>
       </Table.Header>
 

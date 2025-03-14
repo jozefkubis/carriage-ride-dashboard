@@ -5,64 +5,78 @@ import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
 
 const Ride = ({ children }) => {
   return (
-    <div className="font-sono text-[1.6rem] font-semibold text-gray-600">
+    <div className="font-sono text-[1rem] font-semibold text-gray-600">
       {children}
     </div>
   );
 };
 
 const Stacked = ({ children }) => {
-  return <div className="flex flex-col gap-[0.2rem]">{children}</div>;
+  return (
+    <div className="flex flex-col items-start gap-[0.2rem] text-[1rem]">
+      {children}
+    </div>
+  );
 };
 
 const Amount = ({ children }) => {
-  return <div className="font-sono font-medium">{children}</div>;
+  return <div className="font-sono text-[1rem] font-medium">{children}</div>;
 };
 
 function BookingRow({
   booking: {
     id: bookingId,
+    guestId,
     created_at,
-    startDate,
-    endDate,
-    numNights,
+    date,
+    time,
     numGuests,
-    totalPrice,
     status,
-    guests: { fullName: guestName, email },
-    cabins: { name: cabinName },
+    notes,
+    fullName,
+    phone,
+    email,
+    cride: { name: rideName, regularPrice: ridePrice, discount: rideDiscount },
   },
 }) {
-  const guestIdToTagName = {
-    unconfirmed: "blue",
-    "checked-in": "green",
-    "checked-out": "silver",
-  };
+  // const guestIdToTagName = {
+  //   unconfirmed: "blue",
+  //   "checked-in": "green",
+  //   "checked-out": "silver",
+  // };
+  const totalPrice = ridePrice - rideDiscount;
 
   return (
     <Table.Row>
-      <Ride>{cabinName}</Ride>
-
       <Stacked>
-        <span className="font-medium">{guestName}</span>
-        <span className="text-[1.2rem] text-gray-500">{email}</span>
+        <span>{format(new Date(date), "MMM dd yyyy")}</span>
+      </Stacked>
+      <Stacked>
+        <span>{time}</span>
+      </Stacked>
+      <Stacked>
+        <span>{numGuests}</span>
+      </Stacked>
+      {/* <Stacked>
+        <span>{status}</span>
+      </Stacked> */}
+      <Stacked>
+        <span>{notes}</span>
+      </Stacked>
+      <Stacked>
+        <span>{fullName}</span>
+      </Stacked>
+      <Stacked>
+        <span>{phone}</span>
       </Stacked>
 
       <Stacked>
-        <span>
-          {isToday(new Date(startDate))
-            ? "Today"
-            : formatDistanceFromNow(startDate)}{" "}
-          &rarr; {numNights} night stay
-        </span>
-        <span>
-          {format(new Date(startDate), "MMM dd yyyy")} &mdash;{" "}
-          {format(new Date(endDate), "MMM dd yyyy")}
-        </span>
+        <span>{email}</span>
       </Stacked>
 
-      <Tag type={guestIdToTagName[status]}>{status.replace("-", " ")}</Tag>
+      {/* <Tag type={guestIdToTagName[status]}>{status.replace("-", " ")}</Tag> */}
 
+      <Stacked>{rideName}</Stacked>
       <Amount>{formatCurrency(totalPrice)}</Amount>
     </Table.Row>
   );

@@ -1,8 +1,8 @@
-import { getToday } from "../../starter/utils/helpers";
+import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
 export async function getBookings() {
-  const { data, error } = await supabase.from("bookings").select("*");
+  const { data, error } = await supabase.from("bookings").select("*, cride(*)");
 
   if (error) {
     console.error(error);

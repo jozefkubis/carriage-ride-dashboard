@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 
 const StyledTable = ({ children }) => {
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-200 bg-gray-50 text-[1.4rem]">
+    <div className="overflow-hidden rounded-lg border border-gray-200 bg-gray-50 text-left text-[1.2rem]">
       {children}
     </div>
   );
@@ -23,7 +23,7 @@ const StyledHeader = ({ children, columns }) => {
   return (
     <CommonRow
       columns={columns}
-      className="border-b border-gray-300 bg-gray-100 px-6 py-4 font-semibold uppercase tracking-[0.4px] text-gray-600"
+      className="itemsce border-b border-gray-300 bg-gray-100 px-6 py-4 font-semibold uppercase tracking-[0.4px] text-gray-600"
     >
       {children}
     </CommonRow>
