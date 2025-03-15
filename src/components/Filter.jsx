@@ -1,35 +1,45 @@
-import styled, { css } from "styled-components";
+import { useSearchParams } from "react-router-dom";
 
-const StyledFilter = styled.div`
-  border: 1px solid var(--color-grey-100);
-  background-color: var(--color-grey-0);
-  box-shadow: var(--shadow-sm);
-  border-radius: var(--border-radius-sm);
-  padding: 0.4rem;
-  display: flex;
-  gap: 0.4rem;
-`;
+const StyledFilter = ({ children }) => {
+  return (
+    <div className="flex gap-2 rounded-md border border-gray-200 bg-white p-2 shadow-sm">
+      {children}
+    </div>
+  );
+};
 
-const FilterButton = styled.button`
-  background-color: var(--color-grey-0);
-  border: none;
+const FilterButton = ({ active, children, ...props }) => {
+  return (
+    <button
+      className={`rounded-md border-none bg-white px-3 py-1 text-[1rem] font-medium transition-colors duration-300 ${active ? "bg-blue-600 text-white" : "hover:bg-blue-600 hover:text-white"}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
 
-  ${(props) =>
-    props.active &&
-    css`
-      background-color: var(--color-brand-600);
-      color: var(--color-brand-50);
-    `}
+function Filter() {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  border-radius: var(--border-radius-sm);
-  font-weight: 500;
-  font-size: 1.4rem;
-  /* To give the same height as select */
-  padding: 0.44rem 0.8rem;
-  transition: all 0.3s;
-
-  &:hover:not(:disabled) {
-    background-color: var(--color-brand-600);
-    color: var(--color-brand-50);
+  function handleClick(value) {
+    searchParams.set("status", value);
+    setSearchParams(searchParams);
   }
-`;
+
+  return (
+    <StyledFilter>
+      <FilterButton onClick={() => handleClick("všetky")}>
+        Vsetky objednávky
+      </FilterButton>
+      <FilterButton onClick={() => handleClick("zaplatené")}>
+        Zaplatené
+      </FilterButton>
+      <FilterButton onClick={() => handleClick("nezaplatené")}>
+        Nezaplatené
+      </FilterButton>
+    </StyledFilter>
+  );
+}
+
+export default Filter;

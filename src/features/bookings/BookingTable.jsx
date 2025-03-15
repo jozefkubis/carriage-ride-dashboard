@@ -3,6 +3,7 @@ import Table from "../../components/Table";
 import Empty from "../../components/Empty";
 import Spinner from "../../components/Spinner";
 import { useBookings } from "./useBookings";
+import { useSearchParams } from "react-router-dom";
 
 function Div({ children }) {
   return <div className="uppercase">{children}</div>;
@@ -10,10 +11,24 @@ function Div({ children }) {
 
 function BookingTable() {
   const { isLoading, bookings } = useBookings();
+  const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;
 
   if (!bookings.length) return <Empty resource="bookings" />;
+
+  const filterValue = searchParams.get("status") || "všetky";
+
+  let filteredBookings;
+  if (filterValue === "všetky") filteredBookings = bookings;
+  if (filterValue === "zaplatené")
+    filteredBookings = bookings.filter(
+      (booking) => booking.status === "zaplatené",
+    );
+  if (filterValue === "nezaplatené")
+    filteredBookings = bookings.filter(
+      (booking) => booking.status === "nezaplatené",
+    );
 
   return (
     <Table columns="0.8fr 0.5fr 0.7fr 1.1fr 1.1fr 0.5fr 0.8fr">
@@ -32,7 +47,7 @@ function BookingTable() {
       </Table.Header>
 
       <Table.Body
-        data={bookings}
+        data={filteredBookings}
         render={(booking) => <BookingRow key={booking.id} booking={booking} />}
       />
     </Table>

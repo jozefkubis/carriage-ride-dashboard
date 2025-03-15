@@ -1,15 +1,12 @@
-import styled from "styled-components";
+const Select = ({ type = "default", children, ...props }) => {
+  return (
+    <select
+      className={`rounded-md border p-3 text-[1.4rem] font-medium shadow-sm ${type === "white" ? "border-gray-200" : "border-gray-400"} bg-white`}
+      {...props}
+    >
+      {children}
+    </select>
+  );
+};
 
-const StyledSelect = styled.select`
-  font-size: 1.4rem;
-  padding: 0.8rem 1.2rem;
-  border: 1px solid
-    ${(props) =>
-      props.type === "white"
-        ? "var(--color-grey-100)"
-        : "var(--color-grey-300)"};
-  border-radius: var(--border-radius-sm);
-  background-color: var(--color-grey-0);
-  font-weight: 500;
-  box-shadow: var(--shadow-sm);
-`;
+export default Select;
