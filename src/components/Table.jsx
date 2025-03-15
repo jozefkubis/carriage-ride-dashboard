@@ -23,7 +23,7 @@ const StyledHeader = ({ children, columns }) => {
   return (
     <CommonRow
       columns={columns}
-      className="itemsce border-b border-gray-300 bg-gray-100 px-6 py-4 font-semibold uppercase tracking-[0.4px] text-gray-600"
+      className="items-center border-b border-gray-300 bg-gray-100 px-6 py-4 font-semibold uppercase text-gray-600"
     >
       {children}
     </CommonRow>

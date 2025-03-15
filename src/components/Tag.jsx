@@ -12,7 +12,7 @@ const Tag = ({ type, children }) => {
   return (
     <span
       className={clsx(
-        "w-fit rounded-full px-3 py-1 text-[1.1rem] font-semibold uppercase",
+        "w-fit rounded-full px-2 py-1 text-[0.8rem] font-semibold uppercase",
         colorClasses[type] || "bg-gray-100 text-gray-700",
       )}
     >

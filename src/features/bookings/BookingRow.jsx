@@ -13,7 +13,7 @@ const Ride = ({ children }) => {
 
 const Stacked = ({ children }) => {
   return (
-    <div className="flex flex-col items-start gap-[0.2rem] text-[1rem]">
+    <div className="flex flex-col items-start gap-[0.2rem] text-[1rem] text-gray-700">
       {children}
     </div>
   );
@@ -39,11 +39,11 @@ function BookingRow({
     cride: { name: rideName, regularPrice: ridePrice, discount: rideDiscount },
   },
 }) {
-  // const guestIdToTagName = {
-  //   unconfirmed: "blue",
-  //   "checked-in": "green",
-  //   "checked-out": "silver",
-  // };
+  const guestIdToTagName = {
+    zaplatené: "success",
+    nezaplatené: "secondary",
+  };
+
   const totalPrice = ridePrice - rideDiscount;
 
   return (
@@ -60,24 +60,23 @@ function BookingRow({
       {/* <Stacked>
         <span>{status}</span>
       </Stacked> */}
-      <Stacked>
+      {/* <Stacked>
         <span>{notes}</span>
-      </Stacked>
+      </Stacked> */}
       <Stacked>
         <span>{fullName}</span>
+        <span className="text-sm text-gray-500">{email}</span>
       </Stacked>
-      <Stacked>
+      {/* <Stacked>
         <span>{phone}</span>
       </Stacked>
-
       <Stacked>
         <span>{email}</span>
-      </Stacked>
-
-      {/* <Tag type={guestIdToTagName[status]}>{status.replace("-", " ")}</Tag> */}
+      </Stacked> */}
 
       <Stacked>{rideName}</Stacked>
       <Amount>{formatCurrency(totalPrice)}</Amount>
+      <Tag type={guestIdToTagName[status]}>{status.replace("-", " ")}</Tag>
     </Table.Row>
   );
 }
