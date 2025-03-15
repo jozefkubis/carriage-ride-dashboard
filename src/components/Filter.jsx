@@ -32,18 +32,21 @@ function Filter() {
     <StyledFilter>
       <FilterButton
         active={currentFilter === "všetky"}
+        disabled={currentFilter === "všetky"}
         onClick={() => handleClick("všetky")}
       >
         Všetky objednávky
       </FilterButton>
       <FilterButton
         active={currentFilter === "zaplatené"}
+        disabled={currentFilter === "zaplatené"}
         onClick={() => handleClick("zaplatené")}
       >
         Zaplatené
       </FilterButton>
       <FilterButton
         active={currentFilter === "nezaplatené"}
+        disabled={currentFilter === "nezaplatené"}
         onClick={() => handleClick("nezaplatené")}
       >
         Nezaplatené

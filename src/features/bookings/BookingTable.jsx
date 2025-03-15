@@ -17,6 +17,7 @@ function BookingTable() {
 
   if (!bookings.length) return <Empty resource="bookings" />;
 
+  // FILTER
   const filterValue = searchParams.get("status") || "všetky";
 
   let filteredBookings;
@@ -29,6 +30,19 @@ function BookingTable() {
     filteredBookings = bookings.filter(
       (booking) => booking.status === "nezaplatené",
     );
+
+  // SORTBY
+  const sortBy = searchParams.get("sortBy") || "startDate-asc";
+  const [field, direction] = sortBy.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+
+  const sortedBookings = filteredBookings.sort((a, b) => {
+    if (typeof a[field] === "string" && typeof b[field] === "string") {
+      return a[field].localeCompare(b[field]) * modifier;
+    } else {
+      return (a[field] - b[field]) * modifier;
+    }
+  });
 
   return (
     <Table columns="0.8fr 0.5fr 0.7fr 1.1fr 1.1fr 0.5fr 0.8fr">
@@ -47,7 +61,7 @@ function BookingTable() {
       </Table.Header>
 
       <Table.Body
-        data={filteredBookings}
+        data={sortedBookings}
         render={(booking) => <BookingRow key={booking.id} booking={booking} />}
       />
     </Table>
