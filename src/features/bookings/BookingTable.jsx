@@ -11,7 +11,7 @@ function Div({ children }) {
 }
 
 function BookingTable() {
-  const { isLoading, bookings } = useBookings();
+  const { isLoading, bookings, count } = useBookings();
   const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;
@@ -67,7 +67,7 @@ function BookingTable() {
       />
 
       <Table.Footer>
-        <Pagination count={10} />
+        <Pagination count={count} />
       </Table.Footer>
     </Table>
   );
