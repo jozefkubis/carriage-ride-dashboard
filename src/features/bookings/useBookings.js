@@ -13,4 +13,3 @@ export function useBookings() {
 
   return { isLoading, bookings, error };
 }
-

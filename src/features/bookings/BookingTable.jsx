@@ -4,6 +4,7 @@ import Empty from "../../components/Empty";
 import Spinner from "../../components/Spinner";
 import { useBookings } from "./useBookings";
 import { useSearchParams } from "react-router-dom";
+import Pagination from "../../components/Pagination";
 
 function Div({ children }) {
   return <div className="uppercase">{children}</div>;
@@ -15,7 +16,7 @@ function BookingTable() {
 
   if (isLoading) return <Spinner />;
 
-  if (!bookings.length) return <Empty resource="bookings" />;
+  if (!bookings || bookings.length === 0) return <Empty resource="bookings" />;
 
   // FILTER
   const filterValue = searchParams.get("status") || "všetky";
@@ -64,6 +65,10 @@ function BookingTable() {
         data={sortedBookings}
         render={(booking) => <BookingRow key={booking.id} booking={booking} />}
       />
+
+      <Table.Footer>
+        <Pagination count={10} />
+      </Table.Footer>
     </Table>
   );
 }

@@ -9,15 +9,15 @@ function BookingTableOperations() {
 
       <SortBy
         options={[
-          { value: "date-asc", label: "Filtruj podľa dátumu (od najnižšej)" },
-          { value: "date-desc", label: "Filtruj podľa dátumu (od najvyššej)" },
+          { value: "date-asc", label: "Filtruj podľa dátumu ↑" },
+          { value: "date-desc", label: "Filtruj podľa dátumu ↓" },
           {
             value: "numGuests-asc",
-            label: "Filtruj podľa #hostí (od najnižšej)",
+            label: "Filtruj podľa #hostí ↑",
           },
           {
             value: "numGuests-desc",
-            label: "Filtruj podľa #hostí (od najvyššej)",
+            label: "Filtruj podľa #hostí ↓",
           },
           {
             value: "fullName-asc",

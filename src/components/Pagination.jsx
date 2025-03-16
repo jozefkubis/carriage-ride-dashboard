@@ -1,57 +1,85 @@
-import styled from "styled-components";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { useSearchParams } from "react-router-dom";
+import { PAGE_SIZE } from "../utils/constans";
 
-const StyledPagination = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
+const StyledPagination = ({ children }) => (
+  <div className="flex w-full items-center justify-between text-[1rem]">
+    {children}
+  </div>
+);
 
-const P = styled.p`
-  font-size: 1.4rem;
-  margin-left: 0.8rem;
+const P = ({ children }) => <p className="ml-2 text-[1rem]">{children}</p>;
 
-  & span {
-    font-weight: 600;
+const Buttons = ({ children }) => <div className="flex gap-2">{children}</div>;
+
+const PaginationButton = ({
+  onClick,
+  active,
+  disabled,
+  children,
+  ...props
+}) => (
+  <button
+    className={`flex items-center justify-center gap-1 rounded-md px-3 py-2 text-[1rem] transition ${
+      disabled
+        ? "cursor-not-allowed bg-gray-200 text-gray-400"
+        : active
+          ? "bg-blue-600 text-white"
+          : "bg-gray-50 hover:bg-blue-600 hover:text-white"
+    }`}
+    onClick={onClick}
+    disabled={disabled}
+    {...props}
+  >
+    {children}
+  </button>
+);
+
+function Pagination({ count }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = !searchParams.get("page")
+    ? 1
+    : Number(searchParams.get("page"));
+
+  const pageCount = Math.ceil(count / PAGE_SIZE);
+
+  function nextPage() {
+    const next = currentPage === pageCount ? currentPage : currentPage + 1;
+    searchParams.set("page", next);
+    setSearchParams(searchParams);
   }
-`;
 
-const Buttons = styled.div`
-  display: flex;
-  gap: 0.6rem;
-`;
-
-const PaginationButton = styled.button`
-  background-color: ${(props) =>
-    props.active ? " var(--color-brand-600)" : "var(--color-grey-50)"};
-  color: ${(props) => (props.active ? " var(--color-brand-50)" : "inherit")};
-  border: none;
-  border-radius: var(--border-radius-sm);
-  font-weight: 500;
-  font-size: 1.4rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.6rem 1.2rem;
-  transition: all 0.3s;
-
-  &:has(span:last-child) {
-    padding-left: 0.4rem;
+  function prevPage() {
+    const prev = currentPage === 1 ? currentPage : currentPage - 1;
+    searchParams.set("page", prev);
+    setSearchParams(searchParams);
   }
 
-  &:has(span:first-child) {
-    padding-right: 0.4rem;
-  }
+  if (pageCount <= 1) return null;
 
-  & svg {
-    height: 1.8rem;
-    width: 1.8rem;
-  }
+  return (
+    <StyledPagination>
+      <P>
+        <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> až{" "}
+        <span>
+          {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
+        </span>{" "}
+        z <span>{count}</span> záznamov
+      </P>
 
-  &:hover:not(:disabled) {
-    background-color: var(--color-brand-600);
-    color: var(--color-brand-50);
-  }
-`;
+      <Buttons>
+        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
+          <HiChevronLeft /> <span>Predošlá strana</span>
+        </PaginationButton>
+        <PaginationButton
+          onClick={nextPage}
+          disabled={currentPage === pageCount}
+        >
+          <span>Nasledujúca strana</span> <HiChevronRight />
+        </PaginationButton>
+      </Buttons>
+    </StyledPagination>
+  );
+}
+
+export default Pagination;
