@@ -23,7 +23,7 @@ function PageNotFound() {
   return (
     <PageNotFoundDiv>
       <Box>
-        <Heading type="h1">Ľutujeme, ale táto stránka neexistuje. 😢</Heading>
+        <Heading type="h1">Ľutujeme, ale táto stránka nexistuje. 😢</Heading>
         <button onClick={moveBack} size="large">
           &larr; Návrat
         </button>

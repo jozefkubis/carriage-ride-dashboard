@@ -46,7 +46,7 @@ function BookingTable() {
   });
 
   return (
-    <Table columns="0.8fr 0.5fr 0.7fr 1.1fr 1.1fr 0.5fr 0.8fr">
+    <Table columns="0.8fr 0.5fr 0.7fr 1.1fr 1.1fr 0.5fr 0.8fr 0.2fr">
       <Table.Header>
         <Div>Dátum</Div>
         <Div>Čas</Div>
@@ -59,6 +59,7 @@ function BookingTable() {
         <Div>Jazda</Div>
         <Div>€€€</Div>
         <Div>Status</Div>
+        <Div></Div>
       </Table.Header>
 
       <Table.Body

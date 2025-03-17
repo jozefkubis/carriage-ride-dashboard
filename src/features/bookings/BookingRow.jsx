@@ -1,7 +1,9 @@
-import { format, isToday } from "date-fns";
-import Tag from "../../components/Tag";
+import { format } from "date-fns";
+import { ImEye } from "react-icons/im";
 import Table from "../../components/Table";
-import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
+import Tag from "../../components/Tag";
+import { formatCurrency } from "../../utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 const Ride = ({ children }) => {
   return (
@@ -44,6 +46,8 @@ function BookingRow({
     nezaplatené: "secondary",
   };
 
+  const navigate = useNavigate();
+
   const totalPrice = ridePrice - rideDiscount;
 
   return (
@@ -51,32 +55,27 @@ function BookingRow({
       <Stacked>
         <span>{format(new Date(date), "MMM dd yyyy")}</span>
       </Stacked>
+
       <Stacked>
         <span>{time}</span>
       </Stacked>
+
       <Stacked>
         <span>{numGuests}</span>
       </Stacked>
-      {/* <Stacked>
-        <span>{status}</span>
-      </Stacked> */}
-      {/* <Stacked>
-        <span>{notes}</span>
-      </Stacked> */}
+
       <Stacked>
         <span>{fullName}</span>
         <span className="text-sm text-gray-500">{email}</span>
       </Stacked>
-      {/* <Stacked>
-        <span>{phone}</span>
-      </Stacked>
-      <Stacked>
-        <span>{email}</span>
-      </Stacked> */}
 
       <Stacked>{rideName}</Stacked>
       <Amount>{formatCurrency(totalPrice)}</Amount>
       <Tag type={guestIdToTagName[status]}>{status.replace("-", " ")}</Tag>
+
+      <button onClick={() => navigate(`/bookings/${bookingId}`)}>
+        <ImEye />
+      </button>
     </Table.Row>
   );
 }

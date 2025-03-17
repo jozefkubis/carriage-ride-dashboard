@@ -7,7 +7,7 @@ function Bookings() {
   return (
     <>
       <RowHorizontal>
-        <Heading type="h1">All bookings</Heading>
+        <Heading type="h1">Všetky rezervácie</Heading>
         <BookingTableOperations />
       </RowHorizontal>
 

@@ -1,18 +1,12 @@
-import styled from 'styled-components';
-
-const ButtonText = styled.button`
-  color: var(--color-brand-600);
-  font-weight: 500;
-  text-align: center;
-  transition: all 0.3s;
-  background: none;
-  border: none;
-  border-radius: var(--border-radius-sm);
-
-  &:hover,
-  &:active {
-    color: var(--color-brand-700);
-  }
-`;
+function ButtonText({ children, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="rounded-sm border-none bg-transparent text-center font-medium text-indigo-600 transition duration-300 hover:text-indigo-700 active:text-indigo-700"
+    >
+      {children}
+    </button>
+  );
+}
 
 export default ButtonText;

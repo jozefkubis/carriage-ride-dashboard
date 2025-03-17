@@ -1,48 +1,47 @@
-import styled from "styled-components";
-
 import BookingDataBox from "./BookingDataBox";
-import Row from "../../ui/Row";
-import Heading from "../../ui/Heading";
-import Tag from "../../ui/Tag";
-import ButtonGroup from "../../ui/ButtonGroup";
-import Button from "../../ui/Button";
-import ButtonText from "../../ui/ButtonText";
+import { RowVertical } from "../../components/Rows";
+import Heading from "../../components/Heading";
+import Tag from "../../components/Tag";
+import ButtonGroup from "../../components/ButtonGroup";
+import Button from "../../components/Button";
+import ButtonText from "../../components/ButtonText";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
-
-const HeadingGroup = styled.div`
-  display: flex;
-  gap: 2.4rem;
-  align-items: center;
-`;
+import { useBooking } from "./useBooking";
+import Spinner from "../../components/Spinner";
 
 function BookingDetail() {
-  const booking = {};
-  const status = "checked-in";
+  const { booking, isLoading } = useBooking();
 
   const moveBack = useMoveBack();
 
+  if (isLoading) return <Spinner />;
+
   const statusToTagName = {
-    unconfirmed: "blue",
-    "checked-in": "green",
-    "checked-out": "silver",
+    zaplatené: "success",
+    nezaplatené: "secondary",
   };
 
   return (
     <>
-      <Row type="horizontal">
-        <HeadingGroup>
-          <Heading as="h1">Booking #X</Heading>
-          <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
-        </HeadingGroup>
+      <RowVertical
+        type="horizontal"
+        className="flex items-center justify-between"
+      >
+        <div className="flex items-center gap-6">
+          <Heading as="h1">Rezervácia #{booking.id}</Heading>
+          <Tag type={statusToTagName[booking.status]}>
+            {booking.status.replace("-", " ")}
+          </Tag>
+        </div>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
-      </Row>
+      </RowVertical>
 
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
         <Button variation="secondary" onClick={moveBack}>
-          Back
+          Späť
         </Button>
       </ButtonGroup>
     </>

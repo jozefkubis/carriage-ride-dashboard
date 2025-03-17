@@ -35,7 +35,7 @@ function Filter() {
         disabled={currentFilter === "všetky"}
         onClick={() => handleClick("všetky")}
       >
-        Všetky objednávky
+        Všetky rezervácie
       </FilterButton>
       <FilterButton
         active={currentFilter === "zaplatené"}

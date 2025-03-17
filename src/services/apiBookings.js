@@ -28,13 +28,13 @@ export async function getBookings({ page }) {
 export async function getBooking(id) {
   const { data, error } = await supabase
     .from("bookings")
-    .select("*, cabins(*), guests(*)")
+    .select("*, cride(*), guests(*)")
     .eq("id", id)
     .single();
 
   if (error) {
     console.error(error);
-    throw new Error("Booking not found");
+    throw new Error("Rezerváciu nie je možné načítať");
   }
 
   return data;
