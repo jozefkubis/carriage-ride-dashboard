@@ -94,20 +94,23 @@ export async function getStaysTodayActivity() {
   return data;
 }
 
-export async function updateBooking(id, obj) {
+
+export async function updateBooking(id, updates) {
   const { data, error } = await supabase
     .from("bookings")
-    .update(obj)
+    .update(updates) // ✅ Dynamicky aktualizujeme len zmenené polia
     .eq("id", id)
     .select()
     .single();
 
   if (error) {
-    console.error(error);
-    throw new Error("Booking could not be updated");
+    console.error("Chyba pri aktualizácii rezervácie:", error.message);
+    throw new Error("Rezerváciu nie je možné aktualizovať");
   }
+
   return data;
 }
+
 
 export async function deleteBooking(id) {
   // REMEMBER RLS POLICIES

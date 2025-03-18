@@ -28,12 +28,12 @@ const Amount = ({ children }) => {
 function BookingRow({
   booking: {
     id: bookingId,
+    isPaid,
     guestId,
     created_at,
     date,
     time,
     numGuests,
-    status,
     notes,
     fullName,
     phone,
@@ -49,6 +49,8 @@ function BookingRow({
   const navigate = useNavigate();
 
   const totalPrice = ridePrice - rideDiscount;
+
+  const status = isPaid ? "zaplatené" : "nezaplatené";
 
   return (
     <Table.Row>

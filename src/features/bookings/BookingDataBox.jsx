@@ -11,11 +11,11 @@ function BookingDataBox({ booking }) {
   const {
     id: bookingId,
     guestId,
+    isPaid,
     created_at,
     date,
     time,
     numGuests,
-    status,
     notes,
     fullName,
     phone,
@@ -25,6 +25,7 @@ function BookingDataBox({ booking }) {
 
   const totalPrice = ridePrice - rideDiscount;
   const rideTime = time.split(":").slice(0, 2).join(":");
+  // const status = isPaid ? "zaplatené" : "nezaplatené";
 
   return (
     <section className="mx-auto my-10 max-w-5xl overflow-hidden rounded-md border border-gray-200 bg-gray-50">
@@ -41,13 +42,12 @@ function BookingDataBox({ booking }) {
         {/* Guest Info */}
         <div className="mb-6 flex items-center gap-4 text-gray-500">
           <p className="font-medium text-gray-700">
-            {rideName}{" "}
+            👬 {fullName}{" "}
             {numGuests > 1
-              ? `- ${numGuests - 1} ${numGuests === 2 ? "hosť" : "hostia"}`
+              ? `+ ${numGuests - 1} ${numGuests === 2 ? "hosť" : "hostia"}`
               : ""}
           </p>
           <span>→</span>
-          <p>👬 {fullName}</p>
           <p>📧 {email}</p>
           <p>☎ {phone}</p>
         </div>
@@ -73,7 +73,7 @@ function BookingDataBox({ booking }) {
         <div
           className={clsx(
             "mt-6 flex items-center justify-between rounded-sm px-8 py-4",
-            status === "zaplatené"
+            isPaid === true
               ? "bg-green-100 text-green-700"
               : "bg-yellow-100 text-yellow-700",
           )}
@@ -82,7 +82,7 @@ function BookingDataBox({ booking }) {
             {formatCurrency(totalPrice)}
           </DataItem>
           <p className="text-[1.4rem] font-semibold uppercase">
-            {status === "zaplatené" ? "Zaplatené" : "Nezaplatené"}
+            {isPaid === true ? "Zaplatené" : "Nezaplatené"}
           </p>
         </div>
       </section>

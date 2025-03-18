@@ -9,18 +9,26 @@ import ButtonText from "../../components/ButtonText";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "./useBooking";
 import Spinner from "../../components/Spinner";
+import useCheckInBooking from "./useCheckInBooking";
+import { is } from "date-fns/locale";
 
 function BookingDetail() {
   const { booking, isLoading } = useBooking();
+  const { checkInBooking, isCheckingIn } = useCheckInBooking();
 
   const moveBack = useMoveBack();
 
   if (isLoading) return <Spinner />;
+  const status = booking.isPaid ? "zaplatené" : "nezaplatené";
 
   const statusToTagName = {
-    zaplatené: "success",
-    nezaplatené: "secondary",
+    true: "success",
+    false: "secondary",
   };
+
+  function handleCheckin() {
+    checkInBooking({ bookingId: booking.id });
+  }
 
   return (
     <>
@@ -29,9 +37,11 @@ function BookingDetail() {
         className="flex items-center justify-between"
       >
         <div className="flex items-center gap-6">
-          <Heading type="h1">Rezervácia #{booking.id}</Heading>
-          <Tag type={statusToTagName[booking.status]}>
-            {booking.status.replace("-", " ")}
+          <Heading type="h1">
+            Rezervácia #{booking.id} → {booking.cride.name}
+          </Heading>
+          <Tag type={statusToTagName[booking.isPaid]}>
+            {status.replace("-", " ")}
           </Tag>
         </div>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
@@ -40,7 +50,13 @@ function BookingDetail() {
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
-        <Button variation="secondary" onClick={moveBack}>
+        {booking.isPaid === false && (
+          <Button disabled={isCheckingIn} onClick={handleCheckin}>
+            Check in
+          </Button>
+        )}
+
+        <Button variant="secondary" size="medium" onClick={moveBack}>
           Späť
         </Button>
       </ButtonGroup>
