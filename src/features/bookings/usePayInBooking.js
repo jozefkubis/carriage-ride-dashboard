@@ -3,20 +3,22 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { updateBooking } from "../../services/apiBookings";
 
-export default function useCheckInBooking() {
+export default function usePayInBooking() {
     const queryClient = useQueryClient();
-    const navigate = useNavigate(); // ✅ Správne použitie useNavigate()
+    const navigate = useNavigate();
 
-    const { mutate: checkInBooking, isLoading: isCheckingIn } = useMutation({
+    const { mutate: payInBooking, isLoading: isPayingIn } = useMutation({
         mutationFn: ({ bookingId }) =>
-            updateBooking(bookingId, { isPaid: true }), // ✅ Posielame objekt s `isPaid: true`
+            updateBooking(bookingId, { isPaid: true }),
         onSuccess: (data) => {
             toast.success(`Rezervácia #${data.id} úspešne aktualizovaná`);
             queryClient.invalidateQueries({ queryKey: ["booking"] });
-            navigate("/bookings"); // ✅ Správne presmerovanie
+            setTimeout(() => {
+                navigate("/bookings");
+            }, 2000);
         },
         onError: (err) => toast.error(err.message),
     });
 
-    return { checkInBooking, isCheckingIn };
+    return { payInBooking, isPayingIn };
 }

@@ -9,12 +9,17 @@ import ButtonText from "../../components/ButtonText";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "./useBooking";
 import Spinner from "../../components/Spinner";
-import useCheckInBooking from "./useCheckInBooking";
-import { is } from "date-fns/locale";
+import usePayInBooking from "./usePayInBooking";
+import { useDeleteBooking } from "./useDeleteBooking";
+import { useState } from "react";
+import Modal from "../../components/Modal";
+import ConfirmDelete from "../../components/ConfirmDelete";
 
 function BookingDetail() {
   const { booking, isLoading } = useBooking();
-  const { checkInBooking, isCheckingIn } = useCheckInBooking();
+  const { payInBooking, isPayingIn } = usePayInBooking();
+  const { deleteBooking, isDeleting } = useDeleteBooking();
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
 
   const moveBack = useMoveBack();
 
@@ -26,8 +31,8 @@ function BookingDetail() {
     false: "secondary",
   };
 
-  function handleCheckin() {
-    checkInBooking({ bookingId: booking.id });
+  function handlePaying() {
+    payInBooking({ bookingId: booking.id });
   }
 
   return (
@@ -50,9 +55,18 @@ function BookingDetail() {
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
+        <Button
+          disabled={isDeleting}
+          variant="danger"
+          size="medium"
+          onClick={() => setIsOpenDeleteModal((show) => !show)}
+        >
+          Vymazať rezerváciu #{booking.id}
+        </Button>
+
         {booking.isPaid === false && (
-          <Button disabled={isCheckingIn} onClick={handleCheckin}>
-            Check in
+          <Button disabled={isPayingIn} onClick={handlePaying}>
+            Zaplať rezerváciu #{booking.id}
           </Button>
         )}
 
@@ -60,6 +74,17 @@ function BookingDetail() {
           Späť
         </Button>
       </ButtonGroup>
+
+      {isOpenDeleteModal && (
+        <Modal onClose={() => setIsOpenDeleteModal(false)}>
+          <ConfirmDelete
+            resourceName="rezerváciu"
+            onConfirm={() => deleteBooking(booking.id)}
+            disabled={isDeleting}
+            onClose={() => setIsOpenDeleteModal(false)}
+          />
+        </Modal>
+      )}
     </>
   );
 }
