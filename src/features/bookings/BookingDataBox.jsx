@@ -48,8 +48,19 @@ function BookingDataBox({ booking }) {
               : ""}
           </p>
           <span>→</span>
-          <p>📧 {email}</p>
-          <p>☎ {phone}</p>
+          <a
+            href={`mailto:${email}`}
+            className="text-indigo-600 hover:text-indigo-800"
+          >
+            📧 {email}
+          </a>
+          {/* Klikateľné telefónne číslo */}
+          <a
+            href={`tel:${phone}`}
+            className="text-indigo-600 hover:text-indigo-800"
+          >
+            ☎ {phone}
+          </a>
         </div>
 
         {/* Observations */}
