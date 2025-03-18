@@ -1,5 +1,5 @@
 import BookingDataBox from "./BookingDataBox";
-import { RowVertical } from "../../components/Rows";
+import { RowHorizontal, RowVertical } from "../../components/Rows";
 import Heading from "../../components/Heading";
 import Tag from "../../components/Tag";
 import ButtonGroup from "../../components/ButtonGroup";
@@ -24,18 +24,18 @@ function BookingDetail() {
 
   return (
     <>
-      <RowVertical
+      <RowHorizontal
         type="horizontal"
         className="flex items-center justify-between"
       >
         <div className="flex items-center gap-6">
-          <Heading as="h1">Rezervácia #{booking.id}</Heading>
+          <Heading type="h1">Rezervácia #{booking.id}</Heading>
           <Tag type={statusToTagName[booking.status]}>
             {booking.status.replace("-", " ")}
           </Tag>
         </div>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
-      </RowVertical>
+      </RowHorizontal>
 
       <BookingDataBox booking={booking} />
 

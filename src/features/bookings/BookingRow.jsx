@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { ImEye } from "react-icons/im";
+import { TbCircleArrowRightFilled } from "react-icons/tb";
 import Table from "../../components/Table";
 import Tag from "../../components/Tag";
 import { formatCurrency } from "../../utils/helpers";
@@ -74,7 +74,7 @@ function BookingRow({
       <Tag type={guestIdToTagName[status]}>{status.replace("-", " ")}</Tag>
 
       <button onClick={() => navigate(`/bookings/${bookingId}`)}>
-        <ImEye />
+        <TbCircleArrowRightFilled className="h-6 w-6 text-gray-400 hover:scale-110 hover:text-gray-500 active:scale-90" />
       </button>
     </Table.Row>
   );
