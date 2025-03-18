@@ -15,22 +15,16 @@ function BookingTable() {
   const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;
-
   if (!bookings || bookings.length === 0) return <Empty resource="bookings" />;
 
   // FILTER
-  const filterValue = searchParams.get("status") || "všetky";
+  const filterValue = searchParams.get("isPaid");
 
-  let filteredBookings;
-  if (filterValue === "všetky") filteredBookings = bookings;
-  if (filterValue === "zaplatené")
-    filteredBookings = bookings.filter(
-      (booking) => booking.status === "zaplatené",
-    );
-  if (filterValue === "nezaplatené")
-    filteredBookings = bookings.filter(
-      (booking) => booking.status === "nezaplatené",
-    );
+  let filteredBookings = bookings;
+  if (filterValue === "true")
+    filteredBookings = bookings.filter((booking) => booking.isPaid === true);
+  if (filterValue === "false")
+    filteredBookings = bookings.filter((booking) => booking.isPaid === false);
 
   // SORTBY
   const sortBy = searchParams.get("sortBy") || "startDate-asc";
@@ -51,11 +45,7 @@ function BookingTable() {
         <Div>Dátum</Div>
         <Div>Čas</Div>
         <Div>Hostia</Div>
-        {/* <Div>Status</Div> */}
-        {/* <Div>Poznámky</Div> */}
         <Div>Meno</Div>
-        {/* <Div>Tel</Div>
-        <Div>Email</Div> */}
         <Div>Jazda</Div>
         <Div>€€€</Div>
         <Div>Status</Div>

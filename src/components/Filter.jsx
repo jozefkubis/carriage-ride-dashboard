@@ -21,10 +21,10 @@ const FilterButton = ({ active, children, ...props }) => {
 
 function Filter() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentFilter = searchParams.get("status") || "všetky";
+  const currentFilter = searchParams.get("isPaid") || "všetky";
 
   function handleClick(value) {
-    searchParams.set("status", value);
+    searchParams.set("isPaid", value);
     setSearchParams(searchParams);
   }
 
@@ -38,16 +38,16 @@ function Filter() {
         Všetky rezervácie
       </FilterButton>
       <FilterButton
-        active={currentFilter === "zaplatené"}
-        disabled={currentFilter === "zaplatené"}
-        onClick={() => handleClick("zaplatené")}
+        active={currentFilter === "true"}
+        disabled={currentFilter === "true"}
+        onClick={() => handleClick("true")}
       >
         Zaplatené
       </FilterButton>
       <FilterButton
-        active={currentFilter === "nezaplatené"}
-        disabled={currentFilter === "nezaplatené"}
-        onClick={() => handleClick("nezaplatené")}
+        active={currentFilter === "false"}
+        disabled={currentFilter === "false"}
+        onClick={() => handleClick("false")}
       >
         Nezaplatené
       </FilterButton>
