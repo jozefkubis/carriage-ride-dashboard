@@ -1,13 +1,23 @@
+import LoginForm from "../features/authentication/LoginForm";
+import Heading from "../components/Heading";
+import Logo from "../components/Logo";
+
 function LoginLayout({ children }) {
   return (
-    <div className="gap-3.2 bg-grey-50 grid min-h-screen grid-cols-1 items-center justify-center">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center gap-8 bg-gray-50">
       {children}
     </div>
   );
 }
 
 function Login() {
-  return <LoginLayout>Login</LoginLayout>;
+  return (
+    <LoginLayout>
+      <Logo />
+      <Heading type="h4">Prihláste sa do svojho účtu</Heading>
+      <LoginForm />
+    </LoginLayout>
+  );
 }
 
 export default Login;

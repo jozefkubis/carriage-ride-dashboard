@@ -36,7 +36,7 @@ function BookingDetail() {
   }
 
   return (
-    <>
+    <div className="mx-auto mt-10 max-w-5xl">
       <RowHorizontal
         type="horizontal"
         className="flex items-center justify-between"
@@ -85,7 +85,7 @@ function BookingDetail() {
           />
         </Modal>
       )}
-    </>
+    </div>
   );
 }
 

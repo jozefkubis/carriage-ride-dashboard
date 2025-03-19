@@ -28,7 +28,7 @@ function BookingDataBox({ booking }) {
   // const status = isPaid ? "zaplatené" : "nezaplatené";
 
   return (
-    <section className="mx-auto my-10 max-w-5xl overflow-hidden rounded-md border border-gray-200 bg-gray-50">
+    <section className="my-10 overflow-hidden rounded-md border border-gray-200 bg-gray-50">
       {/* HEADER */}
       <header className="flex items-center justify-between bg-indigo-500 px-10 py-5 text-[1.8rem] font-medium text-indigo-100">
         <p>
