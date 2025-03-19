@@ -14,8 +14,15 @@ function LoginForm() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
-
-    login({ email, password });
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      },
+    );
   }
 
   return (
@@ -44,7 +51,7 @@ function LoginForm() {
       </FormRowVertical>
 
       <FormRowVertical>
-        <Button size="large" disabled={isLoading}>
+        <Button size="large" variant="primary">
           {!isLoading ? "Prihlásiť sa" : <SpinnerMini />}
         </Button>
       </FormRowVertical>

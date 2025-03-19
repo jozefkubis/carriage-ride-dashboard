@@ -1,4 +1,4 @@
-import { Form } from "../../components/Forms";
+import { SettingsForm } from "../../components/Forms";
 import FormRow from "../../components/FormRow";
 import Textarea from "../../components/Textarea";
 import { useSettings } from "./useSettings";
@@ -20,7 +20,7 @@ function UpdateSettingsForm() {
   }
 
   return (
-    <Form>
+    <SettingsForm>
       <FormRow label="Email">
         <Input
           type="email"
@@ -49,7 +49,7 @@ function UpdateSettingsForm() {
           onBlur={(e) => handleUpdate(e, "address")}
         />
       </FormRow>
-    </Form>
+    </SettingsForm>
   );
 }
 

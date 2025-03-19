@@ -1,7 +1,18 @@
 const Form = ({ children, ...props }) => {
   return (
     <form
-      className="w-[26rem] overflow-hidden rounded-md border border-gray-200 bg-white p-6 text-sm"
+      className="mx-auto w-[26rem] overflow-hidden rounded-md border border-gray-200 bg-white p-6 text-sm"
+      {...props}
+    >
+      {children}
+    </form>
+  );
+};
+
+const SettingsForm = ({ children, ...props }) => {
+  return (
+    <form
+      className="mx-auto w-1/2 overflow-hidden rounded-md border border-gray-200 bg-white p-6 text-sm"
       {...props}
     >
       {children}
@@ -17,4 +28,4 @@ const ModalForm = ({ children, ...props }) => {
   );
 };
 
-export { Form, ModalForm };
+export { Form, ModalForm, SettingsForm };
