@@ -5,7 +5,7 @@ function NewUsers() {
   return (
     <>
       <Heading type="h1">Vytvor nového užívateľa</Heading>
-      <SignupForm />;
+      <SignupForm />
     </>
   );
 }
