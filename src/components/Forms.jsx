@@ -9,6 +9,17 @@ const Form = ({ children, ...props }) => {
   );
 };
 
+const SignUpForm = ({ children, ...props }) => {
+  return (
+    <form
+      className="mx-auto w-1/2 overflow-hidden rounded-md border border-gray-200 bg-white p-6 text-sm"
+      {...props}
+    >
+      {children}
+    </form>
+  );
+};
+
 const SettingsForm = ({ children, ...props }) => {
   return (
     <form
@@ -28,4 +39,4 @@ const ModalForm = ({ children, ...props }) => {
   );
 };
 
-export { Form, ModalForm, SettingsForm };
+export { Form, ModalForm, SettingsForm, SignUpForm };
