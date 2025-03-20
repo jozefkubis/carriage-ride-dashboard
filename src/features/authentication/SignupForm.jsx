@@ -74,7 +74,6 @@ function SignupForm() {
       </FormRow>
 
       <FormRow>
-        {/* type is an HTML attribute! */}
         <Button
           variant="secondary"
           type="reset"

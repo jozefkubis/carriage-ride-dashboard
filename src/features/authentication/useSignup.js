@@ -7,7 +7,7 @@ export function useSignup() {
     mutationFn: signupApi,
     onSuccess: (user) => {
       toast.success(
-        "Account successfully created! Please verify the new account from the user's email address."
+        "Účet bol úspešne vytvorený! Overte nový účet z e-mailovej adresy používateľa."
       )
     },
     onError: (err) => {
