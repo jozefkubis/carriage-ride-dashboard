@@ -1,4 +1,4 @@
-// import Logout from "../features/authentication/Logout"
+import Logout from "../features/authentication/Logout";
 import { HiOutlineUser } from "react-icons/hi2";
 import ButtonIcon from "./ButtonIcon";
 import { useNavigate } from "react-router-dom";
@@ -21,9 +21,9 @@ function HeaderMenu() {
       {/* <li>
         <DarkModeToggle />
       </li> */}
-      {/* <li>
+      <li>
         <Logout />
-      </li> */}
+      </li>
     </HeaderMenuDiv>
   );
 }
