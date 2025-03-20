@@ -4,10 +4,13 @@ import { RowVertical } from "../components/Rows";
 
 function Settings() {
   return (
-    <RowVertical>
-      <Heading type="h1">Aktualizuj nastavenia</Heading>
+    <>
+      <RowVertical>
+        <Heading type="h1">Aktualizuj nastavenia</Heading>
+      </RowVertical>
+
       <UpdateSettingsForm />
-    </RowVertical>
+    </>
   );
 }
 

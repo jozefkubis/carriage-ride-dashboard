@@ -1,5 +1,5 @@
 import HeaderMenu from "./HeaderMenu";
-// import UserAvatar from "../features/authentication/UserAvatar";
+import UserAvatar from "../features/authentication/UserAvatar";
 
 const HeaderDiv = ({ children }) => {
   return (
@@ -12,7 +12,7 @@ const HeaderDiv = ({ children }) => {
 function Header() {
   return (
     <HeaderDiv>
-      {/* <UserAvatar /> */}
+      <UserAvatar />
       <HeaderMenu />
     </HeaderDiv>
   );

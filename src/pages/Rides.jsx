@@ -10,7 +10,7 @@ function Rides() {
     <>
       <RowHorizontal>
         <Heading type="h1">Všetky jazdy</Heading>
-        <p>Filter / Sort</p>
+        {/* <p>Filter / Sort</p> */}
       </RowHorizontal>
 
       <RowVertical>
