@@ -19,38 +19,29 @@ const FilterButton = ({ active, children, ...props }) => {
   );
 };
 
-function Filter() {
+function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentFilter = searchParams.get("isPaid") || "všetky";
+  const currentFilter = searchParams.get(filterField) || options.at(0).value;
 
   function handleClick(value) {
-    searchParams.set("isPaid", value);
+    searchParams.set(filterField, value);
+    if (searchParams.get("page")) searchParams.set("page", 1);
+
     setSearchParams(searchParams);
   }
 
   return (
     <StyledFilter>
-      <FilterButton
-        active={currentFilter === "všetky"}
-        disabled={currentFilter === "všetky"}
-        onClick={() => handleClick("všetky")}
-      >
-        Všetky rezervácie
-      </FilterButton>
-      <FilterButton
-        active={currentFilter === "true"}
-        disabled={currentFilter === "true"}
-        onClick={() => handleClick("true")}
-      >
-        Zaplatené
-      </FilterButton>
-      <FilterButton
-        active={currentFilter === "false"}
-        disabled={currentFilter === "false"}
-        onClick={() => handleClick("false")}
-      >
-        Nezaplatené
-      </FilterButton>
+      {options.map((option) => (
+        <FilterButton
+          key={option.value}
+          onClick={() => handleClick(option.value)}
+          active={option.value === currentFilter ? true : undefined}
+          disabled={option.value === currentFilter ? true : undefined}
+        >
+          {option.label}
+        </FilterButton>
+      ))}
     </StyledFilter>
   );
 }

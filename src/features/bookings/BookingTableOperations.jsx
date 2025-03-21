@@ -5,7 +5,14 @@ import TableOperations from "../../components/TableOperations";
 function BookingTableOperations() {
   return (
     <TableOperations>
-      <Filter />
+      <Filter
+        filterField="isPaid"
+        options={[
+          { value: "true", label: "Zaplatené" },
+          { value: "false", label: "Nezaplatené" },
+          { value: "všetky", label: "Všetky" },
+        ]}
+      />
 
       <SortBy
         options={[
