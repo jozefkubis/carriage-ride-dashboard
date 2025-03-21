@@ -1,20 +1,24 @@
 import Heading from "../components/Heading";
 import { RowVertical } from "../components/Rows";
+import UpdatePasswordForm from "../features/authentication/UpdatePasswordForm";
+import UpdateUserDataForm from "../features/authentication/UpdateUserDataForm";
 
 function Account() {
   return (
     <>
-      <Heading type="h1">Update your account</Heading>
-
       <RowVertical>
-        <Heading type="h3">Update user data</Heading>
-        <p>Update user data form</p>
+        <Heading type="h1">Aktualizácia účtu</Heading>
       </RowVertical>
 
       <RowVertical>
-        <Heading type="h3">Update password</Heading>
-        <p>Update user password form</p>
+        <Heading type="h3">Aktualizácia údajov</Heading>
       </RowVertical>
+      <UpdateUserDataForm />
+
+      <RowVertical>
+        <Heading type="h3">Aktualizácia hesla</Heading>
+      </RowVertical>
+      <UpdatePasswordForm />
     </>
   );
 }
