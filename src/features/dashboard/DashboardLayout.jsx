@@ -1,6 +1,7 @@
 import { useRecentBookings } from "./useRecentBookings";
 import Spinner from "../../components/Spinner";
 import Stats from "./Stats";
+import SalesChart from "./SalesChart";
 
 export default function DashboardLayout() {
   const { bookings, isLoading: isLoadingBookings } = useRecentBookings();
@@ -12,7 +13,7 @@ export default function DashboardLayout() {
       <Stats bookings={bookings} />
       <div>Dnešné aktivity</div>
       <div>Prehľad rezervácií</div>
-      <div>Zaplatené rezervácie</div>
+      <SalesChart />
     </div>
   );
 }

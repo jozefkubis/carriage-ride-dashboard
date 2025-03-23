@@ -20,8 +20,6 @@ export default function Stats({ bookings }) {
     0,
   );
 
-  console.log(bookings);
-
   return (
     <>
       <Stat
