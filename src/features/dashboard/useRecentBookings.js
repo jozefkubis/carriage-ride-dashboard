@@ -17,5 +17,9 @@ export function useRecentBookings() {
     queryKey: ["bookings", `last-${numDays}`],
   });
 
-  return { isLoading, bookings };
+  const isPaidBookings = bookings?.filter((booking) => booking.isPaid === true);
+
+  const isNotPaidBookings = bookings?.filter((booking) => booking.isPaid === false);
+
+  return { isLoading, bookings, numDays, isPaidBookings, isNotPaidBookings };
 }

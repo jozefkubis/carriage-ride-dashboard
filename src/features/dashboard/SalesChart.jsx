@@ -1,29 +1,86 @@
 import DashboardBox from "./DashboardBox";
 import Heading from "../../components/Heading";
+import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-const isDarkMode = true;
+export default function SalesChart({
+  bookings,
+  numDays,
+  isPaidBookings,
+  isNotPaidBookings,
+}) {
+  const allDates = eachDayOfInterval({
+    start: subDays(new Date(), numDays - 1),
+    end: new Date(),
+  });
 
-const colors = !isDarkMode
-  ? {
-      totalSales: { stroke: "stroke-indigo-600", fill: "fill-indigo-600" },
-      extrasSales: { stroke: "stroke-green-500", fill: "fill-green-500" },
-      text: "text-gray-200",
-      background: "bg-gray-900",
-    }
-  : {
-      totalSales: { stroke: "stroke-indigo-600", fill: "fill-indigo-200" },
-      extrasSales: { stroke: "stroke-green-600", fill: "fill-green-200" },
-      text: "text-gray-800",
-      background: "bg-white",
-    };
+  const data = allDates.map((date) => ({
+    label: format(date, "MMM dd"),
+    paidRides: isPaidBookings
+      .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+      .reduce(
+        (acc, cur) => acc + (cur.cride.regularPrice - cur.cride.discount),
+        0,
+      ),
+    notPaidRides: isNotPaidBookings
+      .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+      .reduce(
+        (acc, cur) => acc + (cur.cride.regularPrice - cur.cride.discount),
+        0,
+      ),
+  }));
 
-export default function SalesChart() {
   return (
-    <DashboardBox className={`col-span-full p-4 ${colors.background}`}>
-      <Heading type="h2" className={`text-lg font-semibold ${colors.text}`}>
+    <DashboardBox className="col-span-full bg-white p-4">
+      <Heading type="h2" className="text-lg font-semibold text-gray-800">
         Predaje
       </Heading>
-      {/* Sem pôjde graf, napr. pomocou Recharts */}
+
+      <ResponsiveContainer height={300} width="100%">
+        <AreaChart data={data}>
+          <XAxis
+            dataKey="label"
+            tick={{ fill: "#374151" }} // text-gray-800
+            tickLine={{ stroke: "#374151" }}
+          />
+          <YAxis
+            unit="€"
+            tick={{ fill: "#374151" }}
+            tickLine={{ stroke: "#374151" }}
+          />
+          <CartesianGrid
+            strokeDasharray="4"
+            className="stroke-gray-300 dark:stroke-gray-700"
+          />
+          <Tooltip contentStyle={{ backgroundColor: "#fff" }} />
+          <Area
+            dataKey="paidRides"
+            type="monotone"
+            stroke="#66e546"
+            fill="#b1e9aa"
+            strokeWidth={2}
+            name="Zaplatené rezervácie"
+            unit="€"
+          />
+          <Area
+            dataKey="notPaidRides"
+            type="monotone"
+            stroke="#a31616"
+            fill="#e9a8a3"
+            strokeWidth={2}
+            name="Nezaplatené rezervácie"
+            unit="€"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
     </DashboardBox>
   );
 }

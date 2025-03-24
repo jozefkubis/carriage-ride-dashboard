@@ -4,15 +4,11 @@ import { HiOutlineBanknotes, HiOutlineBriefcase } from "react-icons/hi2";
 import { formatCurrency } from "../../utils/helpers";
 import Stat from "./Stat";
 
-export default function Stats({ bookings }) {
+export default function Stats({ bookings, isPaidBookings, isNotPaidBookings }) {
   const numBookings = bookings.length;
 
-  const isPaidBookings = bookings.filter((booking) => booking.isPaid === true);
   const numPaidBookings = isPaidBookings.length;
 
-  const isNotPaidBookings = bookings.filter(
-    (booking) => booking.isPaid === false,
-  );
   const numNotPaidBookings = isNotPaidBookings.length;
 
   const sales = isPaidBookings.reduce(

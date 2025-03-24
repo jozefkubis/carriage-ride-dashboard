@@ -10,8 +10,9 @@ function Dashboard() {
         <Heading type="h1">Dashboard</Heading>
         <DashboardFilter />
       </RowHorizontal>
-
-      <DashboardLayout />
+      <div className="mx-auto">
+        <DashboardLayout />
+      </div>
     </>
   );
 }
