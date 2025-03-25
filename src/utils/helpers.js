@@ -19,12 +19,13 @@ export const formatDistanceFromNow = (dateStr) =>
 export const getToday = function (options = {}) {
   const today = new Date();
 
-  // This is necessary to compare with created_at from Supabase, because it it not at 0.0.0.0, so we need to set the date to be END of the day when we compare it with earlier dates
+  // Nastaví dátum na koniec alebo začiatok dňa podľa parametra "end"
   if (options?.end)
-    // Set to the last second of the day
     today.setUTCHours(23, 59, 59, 999);
-  else today.setUTCHours(0, 0, 0, 0);
-  return today.toISOString();
+  else
+    today.setUTCHours(0, 0, 0, 0);
+
+  return today.toISOString().split("T")[0]; // Vracia iba dátum vo formáte YYYY-MM-DD
 };
 
 export const formatCurrency = (value) =>

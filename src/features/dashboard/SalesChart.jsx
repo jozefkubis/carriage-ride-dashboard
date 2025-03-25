@@ -70,7 +70,7 @@ export default function SalesChart({
             name="Zaplatené rezervácie"
             unit="€"
           />
-          <Area
+          {/* <Area
             dataKey="notPaidRides"
             type="monotone"
             stroke="#a31616"
@@ -78,7 +78,7 @@ export default function SalesChart({
             strokeWidth={2}
             name="Nezaplatené rezervácie"
             unit="€"
-          />
+          /> */}
         </AreaChart>
       </ResponsiveContainer>
     </DashboardBox>

@@ -3,6 +3,7 @@ import Spinner from "../../components/Spinner";
 import Stats from "./Stats";
 import SalesChart from "./SalesChart";
 import DurationChart from "./DurationChart";
+import TodayActivity from "./TodayActivity";
 
 export default function DashboardLayout() {
   const {
@@ -16,13 +17,13 @@ export default function DashboardLayout() {
   if (isLoadingBookings) return <Spinner />;
 
   return (
-    <div className="alidgn-center grid max-w-[100rem] grid-cols-4 grid-rows-[auto] gap-6 py-6">
+    <div className="grid grid-cols-4 grid-rows-[auto] gap-6 py-6">
       <Stats
         bookings={bookings}
         isPaidBookings={isPaidBookings}
         isNotPaidBookings={isNotPaidBookings}
       />
-      <div>Dnešné aktivity</div>
+      <TodayActivity />
       <DurationChart
         orders={bookings}
         isPaidBookings={isPaidBookings}

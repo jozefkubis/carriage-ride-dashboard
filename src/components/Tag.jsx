@@ -6,7 +6,7 @@ const Tag = ({ type, children }) => {
     secondary: "text-gray-700 bg-gray-100",
     success: "text-green-700 bg-green-100",
     danger: "text-red-700 bg-red-100",
-    warning: "text-yellow-700 bg-yellow-100",
+    // warning: "text-yellow-700 bg-yellow-100",
   };
 
   return (
