@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useEffect, useState } from "react";
 
 export default function SalesChart({
   bookings,
@@ -17,6 +18,20 @@ export default function SalesChart({
   isPaidBookings,
   isNotPaidBookings,
 }) {
+  const [isDark, setIsDark] = useState(
+    document.documentElement.classList.contains("dark"),
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
+
   const allDates = eachDayOfInterval({
     start: subDays(new Date(), numDays - 1),
     end: new Date(),
@@ -39,7 +54,7 @@ export default function SalesChart({
   }));
 
   return (
-    <DashboardBox className="col-span-full bg-white p-4">
+    <DashboardBox className="col-span-full bg-white p-4 dark:bg-gray-800">
       <Heading type="h2" className="text-lg font-semibold text-gray-800">
         Predaje
       </Heading>
@@ -48,17 +63,17 @@ export default function SalesChart({
         <AreaChart data={data}>
           <XAxis
             dataKey="label"
-            tick={{ fill: "#374151" }} // text-gray-800
-            tickLine={{ stroke: "#374151" }}
+            tick={{ fill: isDark ? "#e5e7eb" : "#374151" }}
+            tickLine={{ stroke: isDark ? "#e5e7eb" : "#374151" }}
           />
           <YAxis
             unit="€"
-            tick={{ fill: "#374151" }}
-            tickLine={{ stroke: "#374151" }}
+            tick={{ fill: isDark ? "#e5e7eb" : "#374151" }}
+            tickLine={{ stroke: isDark ? "#e5e7eb" : "#374151" }}
           />
           <CartesianGrid
             strokeDasharray="4"
-            className="stroke-gray-300 dark:stroke-gray-700"
+            className="stroke-gray-300 dark:stroke-gray-200"
           />
           <Tooltip contentStyle={{ backgroundColor: "#fff" }} />
           <Area

@@ -8,7 +8,7 @@ const Heading = ({ type, children }) => {
     h4: "text-3xl font-semibold text-center text-gray-700",
   };
 
-  const className = `${baseStyles} ${typeStyles[type]}`;
+  const className = `${baseStyles} ${typeStyles[type]} dark:text-gray-200`;
 
   return <div className={className}>{children}</div>;
 };

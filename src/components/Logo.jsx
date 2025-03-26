@@ -1,6 +1,6 @@
 const LogoDiv = ({ children }) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 text-xl font-bold italic text-gray-500">
+    <div className="flex flex-col items-center justify-center gap-2 text-xl font-bold italic text-gray-500 dark:text-gray-200">
       {children}
     </div>
   );

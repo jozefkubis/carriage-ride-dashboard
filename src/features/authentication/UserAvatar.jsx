@@ -5,7 +5,7 @@ function UserAvatar() {
   const { fullName, avatar } = user.user_metadata;
 
   return (
-    <div className="flex items-center gap-5 text-[1rem] font-medium text-gray-600">
+    <div className="flex items-center gap-5 text-[1rem] font-medium text-gray-600 dark:text-gray-200">
       <img
         src={avatar || "avatar.png"}
         alt={`Avatar of ${fullName}`}

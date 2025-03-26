@@ -27,7 +27,7 @@ function DurationChart({
   const COLORS = ["#00C49F", "#FF8042"];
 
   return (
-    <div className="col-span-2 rounded-md border border-gray-100 bg-white p-6">
+    <div className="col-span-2 rounded-md border border-gray-100 bg-white p-6 dark:bg-gray-800">
       <Heading type="h2" className="mb-4">
         Sumár rezervácii
       </Heading>
