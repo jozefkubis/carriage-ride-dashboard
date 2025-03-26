@@ -9,7 +9,8 @@ npm i react-hot-toast
 npm i react-hook-form@7
 npm install clsx
 npm i recharts@latest
+npm i react-error-boundary
 
 
 
-npm install -D prettier prettier-plugin-tailwindcss react-router-dom react-icons @supabase/supabase-js @tanstack/react-query @tanstack/react-query-devtools date-fns react-hot-toast react-hook-form clsx recharts@lates
+npm install -D prettier prettier-plugin-tailwindcss react-router-dom react-icons @supabase/supabase-js @tanstack/react-query @tanstack/react-query-devtools date-fns react-hot-toast react-hook-form clsx recharts@lates react-error-boundary

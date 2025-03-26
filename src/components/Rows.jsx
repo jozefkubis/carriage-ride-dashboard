@@ -1,13 +1,9 @@
 export const RowHorizontal = ({ children }) => {
   return (
-    <div className="flex items-center justify-between px-6 pt-6">
-      {children}
-    </div>
+    <div className="flex items-center justify-between pt-6">{children}</div>
   );
 };
 
 export const RowVertical = ({ children }) => {
-  return (
-    <div className="mx-auto flex flex-col gap-4 px-6 py-6">{children}</div>
-  );
+  return <div className="mx-auto flex flex-col gap-4 py-8">{children}</div>;
 };

@@ -5,7 +5,7 @@ import DashboardLayout from "../features/dashboard/DashboardLayout";
 
 function Dashboard() {
   return (
-    <>
+    <div>
       <RowHorizontal type="horizontal">
         <Heading type="h1">Dashboard</Heading>
         <DashboardFilter />
@@ -13,7 +13,7 @@ function Dashboard() {
       <div className="mx-auto">
         <DashboardLayout />
       </div>
-    </>
+    </div>
   );
 }
 
