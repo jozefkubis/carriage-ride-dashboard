@@ -1,7 +1,7 @@
 const Form = ({ children, ...props }) => {
   return (
     <form
-      className="mx-auto w-[26rem] overflow-hidden rounded-md border border-gray-200 bg-white p-6 text-sm"
+      className="mx-auto w-[26rem] overflow-hidden rounded-md border border-gray-200 bg-white p-6 text-sm dark:bg-gray-800 dark:text-gray-200"
       {...props}
     >
       {children}
@@ -23,7 +23,7 @@ const SignUpForm = ({ children, ...props }) => {
 const SettingsForm = ({ children, ...props }) => {
   return (
     <form
-      className="mx-auto w-[44rem] overflow-hidden rounded-md border border-gray-200 bg-white p-6 text-sm"
+      className="mx-auto w-[44rem] overflow-hidden rounded-md border border-gray-200 bg-white p-6 text-sm dark:bg-gray-800 dark:text-gray-200"
       {...props}
     >
       {children}
