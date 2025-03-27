@@ -3,7 +3,7 @@ const StyledSelect = ({ type = "default", children, ...props }) => {
     <select
       className={`rounded-md border px-3 py-2 text-[1rem] font-medium shadow-sm ${
         type === "white" ? "border-gray-200" : "border-gray-400"
-      } bg-white`}
+      } bg-white dark:bg-gray-700 dark:text-gray-200`}
       {...props}
     >
       {children}

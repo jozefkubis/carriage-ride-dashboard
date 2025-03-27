@@ -15,7 +15,7 @@ const Ride = ({ children }) => {
 
 const Stacked = ({ children }) => {
   return (
-    <div className="flex flex-col items-start gap-[0.2rem] text-[1rem] text-gray-700">
+    <div className="flex flex-col items-start gap-[0.2rem] text-[1rem] text-gray-700 dark:text-gray-200">
       {children}
     </div>
   );
@@ -68,7 +68,9 @@ function BookingRow({
 
       <Stacked>
         <span>{fullName}</span>
-        <span className="text-sm text-gray-500">{email}</span>
+        <span className="text-sm text-gray-500 dark:text-gray-200">
+          {email}
+        </span>
       </Stacked>
 
       <Stacked>{rideName}</Stacked>

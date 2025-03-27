@@ -1,17 +1,24 @@
 import { HiOutlineMoon, HiOutlineSun } from "react-icons/hi2";
 import ButtonIcon from "./ButtonIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function DarkModeToggle() {
-  const [darkMode, setDarkMode] = useState(false);
+  // Načítať darkMode zo storage alebo použiť predvolené nastavenie
+  const [darkMode, setDarkMode] = useState(
+    () => localStorage.getItem("darkMode") === "true",
+  );
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    if (darkMode) {
-      document.documentElement.classList.remove("dark");
-    } else {
-      document.documentElement.classList.add("dark");
-    }
+    setDarkMode((prev) => !prev);
   };
 
   return (

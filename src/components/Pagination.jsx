@@ -22,10 +22,10 @@ const PaginationButton = ({
   <button
     className={`flex items-center justify-center gap-1 rounded-md px-3 py-2 text-[1rem] transition ${
       disabled
-        ? "cursor-not-allowed bg-gray-200 text-gray-400"
+        ? "cursor-not-allowed bg-gray-200 text-gray-400 dark:bg-gray-700 dark:text-gray-200"
         : active
           ? "bg-blue-600 text-white"
-          : "bg-gray-50 hover:bg-blue-600 hover:text-white"
+          : "bg-gray-50 hover:bg-blue-600 hover:text-white dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-blue-600 dark:hover:text-white"
     }`}
     onClick={onClick}
     disabled={disabled}

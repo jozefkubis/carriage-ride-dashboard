@@ -27,7 +27,7 @@ function DurationChart({
   const COLORS = ["#00C49F", "#FF8042"];
 
   return (
-    <div className="col-span-2 rounded-md border border-gray-100 bg-white p-6 dark:bg-gray-800">
+    <div className="col-span-2 rounded-md border border-gray-100 bg-white p-6 text-sm dark:bg-gray-800">
       <Heading type="h2" className="mb-4">
         Sumár rezervácii
       </Heading>
@@ -37,8 +37,8 @@ function DurationChart({
             data={data}
             cx="40%"
             cy="50%"
-            innerRadius={70}
-            outerRadius={110}
+            innerRadius={60}
+            outerRadius={100}
             fill="#8884d8"
             paddingAngle={5}
             dataKey="value"
@@ -56,7 +56,7 @@ function DurationChart({
             align="right"
             width="40%"
             layout="vertical"
-            iconSize={12}
+            iconSize={10}
             iconType="circle"
           />
         </PieChart>

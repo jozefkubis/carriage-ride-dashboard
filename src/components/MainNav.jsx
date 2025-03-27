@@ -11,11 +11,13 @@ const NavList = ({ children }) => {
   return <ul className="flex flex-col gap-2">{children}</ul>;
 };
 
-const LinkDiv = ({ children, ...props }) => {
+const LinkDiv = ({ to, children }) => {
   return (
     <NavLink
-      {...props}
-      className="flex items-center gap-3 p-3 text-sm font-medium text-gray-600 transition-all duration-300 hover:rounded-sm hover:bg-gray-50 hover:text-gray-800 active:rounded-sm active:bg-gray-50 active:text-gray-800 dark:text-gray-200 [&.active]:rounded-sm [&.active]:bg-gray-50 [&.active]:text-gray-800"
+      to={to}
+      className={({ isActive }) =>
+        `flex items-center gap-3 p-3 text-sm font-medium transition-all duration-300 ${isActive ? "rounded-sm bg-gray-50 text-gray-800" : "text-gray-600 hover:bg-gray-50 hover:text-gray-800 dark:text-gray-200"} dark:hover:text-gray-800`
+      }
     >
       {children}
     </NavLink>
@@ -28,31 +30,31 @@ function MainNav() {
       <NavList>
         <li>
           <LinkDiv to="/dashboard">
-            <HiOutlineHome className="hover:text-brand-600 active:text-brand-600 [&.active]:text-brand-600 h-6 w-6 text-gray-400 transition-all duration-300" />
+            <HiOutlineHome className="h-6 w-6 text-inherit transition-all duration-300" />
             <span>Domov</span>
           </LinkDiv>
         </li>
         <li>
           <LinkDiv to="/bookings">
-            <HiMiniCalendarDays className="hover:text-brand-600 active:text-brand-600 [&.active]:text-brand-600 h-6 w-6 text-gray-400 transition-all duration-300" />
-            <span>Ojednávky</span>
+            <HiMiniCalendarDays className="h-6 w-6 text-inherit transition-all duration-300" />
+            <span>Objednávky</span>
           </LinkDiv>
         </li>
         <li>
           <LinkDiv to="/rides">
-            <LiaHorseHeadSolid className="hover:text-brand-600 active:text-brand-600 [&.active]:text-brand-600 h-6 w-6 text-gray-400 transition-all duration-300" />
+            <LiaHorseHeadSolid className="h-6 w-6 text-inherit transition-all duration-300" />
             <span>Jazdy</span>
           </LinkDiv>
         </li>
         <li>
           <LinkDiv to="/users">
-            <HiOutlineUsers className="hover:text-brand-600 active:text-brand-600 [&.active]:text-brand-600 h-6 w-6 text-gray-400 transition-all duration-300" />
+            <HiOutlineUsers className="h-6 w-6 text-inherit transition-all duration-300" />
             <span>Užívateľ</span>
           </LinkDiv>
         </li>
         <li>
           <LinkDiv to="/settings">
-            <HiOutlineCog6Tooth className="hover:text-brand-600 active:text-brand-600 [&.active]:text-brand-600 h-6 w-6 text-gray-400 transition-all duration-300" />
+            <HiOutlineCog6Tooth className="h-6 w-6 text-inherit transition-all duration-300" />
             <span>Nastavenia</span>
           </LinkDiv>
         </li>

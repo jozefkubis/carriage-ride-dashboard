@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 
 const StyledTable = ({ children }) => {
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-200 bg-gray-50 text-left text-[1.2rem]">
+    <div className="overflow-hidden rounded-lg border border-gray-200 bg-gray-50 text-left text-[1.2rem] dark:bg-gray-800">
       {children}
     </div>
   );
@@ -48,7 +48,7 @@ const StyledBody = ({ children }) => {
 const Footer = ({ children }) => {
   return (
     <footer
-      className={`flex justify-center bg-gray-100 p-3 ${!children && "hidden"}`}
+      className={`flex justify-center bg-gray-100 p-3 pt-6 ${!children && "hidden"} dark:bg-gray-800 dark:text-gray-200`}
     >
       {children}
     </footer>
