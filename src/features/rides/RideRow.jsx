@@ -6,6 +6,8 @@ import { useDeleteRide } from "./useDeleteRide";
 import Modal from "../../components/Modal";
 import ConfirmDelete from "../../components/ConfirmDelete";
 import Table from "../../components/Table";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaPencil } from "react-icons/fa6";
 
 const Img = ({ src, alt }) => {
   return (
@@ -19,7 +21,7 @@ const Img = ({ src, alt }) => {
 
 const Ride = ({ children }) => {
   return (
-    <div className="font-sono text-sm font-semibold text-gray-600">
+    <div className="font-sono text-sm font-semibold text-gray-600 dark:text-gray-200">
       {children}
     </div>
   );
@@ -27,7 +29,7 @@ const Ride = ({ children }) => {
 
 const Description = ({ children }) => {
   return (
-    <div className="font-sono text-sm font-semibold text-gray-600">
+    <div className="font-sono text-sm font-semibold text-gray-600 dark:text-gray-200">
       {children}
     </div>
   );
@@ -77,15 +79,16 @@ function RideRow({ ride }) {
             variant="secondary"
             onClick={() => setIsOpenModal((show) => !show)}
           >
-            Upraviť
+            <FaPencil />
           </Button>
 
           <Button
             size="small"
+            variant="danger"
             onClick={() => setIsOpenDeleteModal((show) => !show)}
             disabled={isDeleting}
           >
-            Vyzmazať
+            <RiDeleteBin6Line />
           </Button>
         </div>
       </Table.Row>
