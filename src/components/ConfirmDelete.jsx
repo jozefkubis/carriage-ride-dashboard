@@ -9,7 +9,7 @@ function ConfirmDelete({ resourceName, onConfirm, disabled, onClose }) {
   return (
     <StyledConfirmDelete>
       <Heading type="h3">Vymazať {resourceName}</Heading>
-      <p className="mb-5 text-gray-500">
+      <p className="mb-5 text-gray-500 dark:text-gray-200">
         Ste si istý, že chcete vymazať túto {resourceName}?
       </p>
 

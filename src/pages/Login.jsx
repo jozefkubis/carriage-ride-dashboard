@@ -4,7 +4,7 @@ import Logo from "../components/Logo";
 
 function LoginLayout({ children }) {
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center gap-8 bg-gray-50">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center gap-8 bg-gray-50 dark:bg-gray-700">
       {children}
     </div>
   );

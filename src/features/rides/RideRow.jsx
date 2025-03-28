@@ -74,22 +74,19 @@ function RideRow({ ride }) {
         <TotalPrice>{formatCurrency(totalPrice)}</TotalPrice>
         <Description>{description}</Description>
         <div className="flex flex-col items-end gap-2 px-4">
-          <Button
-            size="small"
-            variant="secondary"
+          <button
             onClick={() => setIsOpenModal((show) => !show)}
+            disabled={isDeleting}
           >
-            <FaPencil />
-          </Button>
+            <FaPencil size={18} style={{ color: "gray" }} />
+          </button>
 
-          <Button
-            size="small"
-            variant="danger"
+          <button
             onClick={() => setIsOpenDeleteModal((show) => !show)}
             disabled={isDeleting}
           >
-            <RiDeleteBin6Line />
-          </Button>
+            <RiDeleteBin6Line size={18} style={{ color: "gray" }} />
+          </button>
         </div>
       </Table.Row>
 

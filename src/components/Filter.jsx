@@ -11,7 +11,7 @@ const StyledFilter = ({ children }) => {
 const FilterButton = ({ active, children, ...props }) => {
   return (
     <button
-      className={`rounded-md px-3 py-1 text-[1rem] font-medium transition-colors duration-300 ${active ? "bg-blue-600 text-white" : "bg-white hover:bg-blue-600 hover:text-white"} dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-blue-600 dark:hover:text-white ${active ? "dark:bg-blue-600 dark:text-white" : ""}`}
+      className={`rounded-md px-3 py-1 text-[1rem] font-medium transition-colors duration-300 ${active ? "bg-blue-600 text-white dark:bg-blue-600 dark:text-white" : ""} ${!active ? "bg-white hover:bg-blue-600 hover:text-white dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-blue-600 dark:hover:text-white" : ""} `}
       {...props}
     >
       {children}

@@ -38,10 +38,10 @@ function BookingDataBox({ booking }) {
       </header>
 
       {/* MAIN CONTENT */}
-      <section className="px-10 py-8">
+      <section className="px-10 py-8 dark:bg-gray-800 dark:text-gray-200">
         {/* Guest Info */}
         <div className="mb-6 flex items-center gap-4 text-gray-500">
-          <p className="font-medium text-gray-700">
+          <p className="font-medium text-gray-700 dark:text-gray-200">
             👬 {fullName}{" "}
             {numGuests > 1
               ? `+ ${numGuests - 1} ${numGuests === 2 ? "hosť" : "hostia"}`
@@ -52,14 +52,14 @@ function BookingDataBox({ booking }) {
             href={`mailto:${email}`}
             className="text-indigo-600 hover:text-indigo-800"
           >
-            📧 {email}
+            <span className="text-2xl">📧</span> {email}
           </a>
           {/* Klikateľné telefónne číslo */}
           <a
             href={`tel:${phone}`}
             className="text-indigo-600 hover:text-indigo-800"
           >
-            ☎ {phone}
+            <span className="text-2xl">☎</span> {phone}
           </a>
         </div>
 
@@ -99,7 +99,7 @@ function BookingDataBox({ booking }) {
       </section>
 
       {/* FOOTER */}
-      <footer className="px-10 py-4 text-right text-[1.2rem] text-gray-500">
+      <footer className="px-10 py-4 text-right text-[1.2rem] text-gray-500 dark:bg-gray-800 dark:text-gray-200">
         <p>
           Rezervované{" "}
           {format(new Date(created_at), "EEE, d. MMM yyyy, p", { locale: sk })}

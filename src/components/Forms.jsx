@@ -33,7 +33,10 @@ const SettingsForm = ({ children, ...props }) => {
 
 const ModalForm = ({ children, ...props }) => {
   return (
-    <form className="overflow-hidden bg-white text-sm" {...props}>
+    <form
+      className="overflow-hidden bg-white text-sm dark:bg-gray-700 dark:text-gray-200"
+      {...props}
+    >
       {children}
     </form>
   );

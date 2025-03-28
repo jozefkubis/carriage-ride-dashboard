@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 const FullPage = ({ children }) => {
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-50">
+    <div className="flex h-screen items-center justify-center bg-gray-50 dark:bg-gray-700">
       {children}
     </div>
   );
