@@ -13,7 +13,6 @@ import {
 import { useEffect, useState } from "react";
 
 export default function SalesChart({
-  bookings,
   numDays,
   isPaidBookings,
   isNotPaidBookings,

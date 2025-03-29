@@ -8,12 +8,7 @@ import {
 } from "recharts";
 import Heading from "../../components/Heading";
 
-function DurationChart({
-  bookings,
-  isPaidBookings,
-  isNotPaidBookings,
-  numDays,
-}) {
+function DurationChart({ isPaidBookings, isNotPaidBookings }) {
   const data = [
     {
       name: "Zaplatené rezervácie",

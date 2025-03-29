@@ -14,7 +14,7 @@ export default function DashboardLayout() {
     isLoading: isLoadingBookings,
   } = useRecentBookings();
 
-  if (isLoadingBookings) return <Spinner />;
+  if (isLoadingBookings) return <p>Loading...</p>;
 
   return (
     <div className="grid grid-cols-4 grid-rows-[auto] gap-6 py-6">
