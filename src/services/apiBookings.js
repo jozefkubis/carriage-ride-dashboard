@@ -56,23 +56,6 @@ export async function getBookingsAfterDate(date) {
   return data;
 }
 
-// Returns all STAYS that are were created after the given date
-// export async function getStaysAfterDate(date) {
-//   const { data, error } = await supabase
-//     .from("bookings")
-//     .select("*, guests(fullName)")
-//     .gte("startDate", date)
-//     .lte("startDate", getToday());
-
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Bookings could not get loaded");
-//   }
-
-//   return data;
-// }
-
-// Activity means that there is a check in or a check out today
 export async function getTodayActivity() {
   const today = getToday();
 
