@@ -6,6 +6,8 @@ import {
   HiOutlineCog6Tooth,
 } from "react-icons/hi2";
 import { LiaHorseHeadSolid } from "react-icons/lia";
+import { FaRegKissWinkHeart } from "react-icons/fa";
+import { LuPlaneLanding } from "react-icons/lu";
 
 const NavList = ({ children }) => {
   return <ul className="flex flex-col gap-2">{children}</ul>;
@@ -35,15 +37,27 @@ function MainNav() {
           </LinkDiv>
         </li>
         <li>
-          <LinkDiv to="/bookings">
-            <HiMiniCalendarDays className="h-6 w-6" />
-            <span>Objednávky</span>
+          <LinkDiv to="/landingpage">
+            <LuPlaneLanding className="h-6 w-6" />
+            <span>Úvod</span>
           </LinkDiv>
         </li>
         <li>
           <LinkDiv to="/rides">
             <LiaHorseHeadSolid className="h-6 w-6" />
             <span>Jazdy</span>
+          </LinkDiv>
+        </li>
+        <li>
+          <LinkDiv to="/bookings">
+            <HiMiniCalendarDays className="h-6 w-6" />
+            <span>Objednávky</span>
+          </LinkDiv>
+        </li>
+        <li>
+          <LinkDiv to="/references">
+            <FaRegKissWinkHeart className="h-6 w-6" />
+            <span>Referencie</span>
           </LinkDiv>
         </li>
         <li>
