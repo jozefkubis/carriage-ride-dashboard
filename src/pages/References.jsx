@@ -1,5 +1,5 @@
-import ReferenceList from "../features/references/ReferenceList";
+import ReferenceTable from "../features/references/ReferenceTable";
 
 export default function References() {
-  return <ReferenceList />;
+  return <ReferenceTable />;
 }
