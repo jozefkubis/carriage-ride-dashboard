@@ -9,7 +9,7 @@ export default function AddRide() {
   return (
     <div>
       <Button
-        size="medium"
+        size="large"
         variant="primary"
         onClick={() => setIsOpenModal((show) => !show)}
       >
