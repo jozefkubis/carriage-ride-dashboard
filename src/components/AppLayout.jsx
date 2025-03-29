@@ -16,7 +16,9 @@ const Main = ({ children }) => {
 
 const Container = ({ children }) => {
   return (
-    <div className="mx-auto flex max-w-[80rem] flex-col gap-4">{children}</div>
+    <div className="mx-auto mt-10 flex max-w-[80rem] flex-col gap-4">
+      {children}
+    </div>
   );
 };
 

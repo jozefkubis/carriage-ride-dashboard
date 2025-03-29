@@ -6,13 +6,9 @@ import { useState } from "react";
 import Modal from "../../components/Modal";
 import ConfirmDelete from "../../components/ConfirmDelete";
 
-const Stacked = ({ children }) => {
-  return (
-    <div className="flex flex-col items-start gap-4 text-[1rem]">
-      {children}
-    </div>
-  );
-};
+const Stacked = ({ children }) => (
+  <div className="mx-auto flex max-w-4xl flex-col gap-4">{children}</div>
+);
 
 function ReferenceList({ reference }) {
   const { isDeleting, deleteReference } = useDeleteReference();
@@ -25,25 +21,22 @@ function ReferenceList({ reference }) {
 
   return (
     <>
-      <div className="mt-10 flex flex-col gap-8">
-        <Stacked key={id}>
-          <div className="grid grid-cols-[1fr_auto] bg-white p-6 dark:bg-gray-800">
-            <div>
-              <p className="text-sm">{formattedDate}</p>
-              <Heading type="h5">{name}</Heading>
-              <p>{text}</p>
-            </div>
-            <div>
-              <button
-                onClick={() => setIsOpenDeleteModal((show) => !show)}
-                disabled={isDeleting}
-              >
-                <RiDeleteBin6Line size={18} style={{ color: "gray" }} />
-              </button>
-            </div>
+      <Stacked>
+        <div className="flex justify-between rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
+          <div>
+            <p className="text-sm text-gray-500">{formattedDate}</p>
+            <Heading type="h5">{name}</Heading>
+            <p className="text-gray-700 dark:text-gray-300">{text}</p>
           </div>
-        </Stacked>
-      </div>
+          <button
+            onClick={() => setIsOpenDeleteModal(true)}
+            disabled={isDeleting}
+            className="text-gray-500 transition hover:text-red-600"
+          >
+            <RiDeleteBin6Line size={18} />
+          </button>
+        </div>
+      </Stacked>
 
       {isOpenDeleteModal && (
         <Modal onClose={() => setIsOpenDeleteModal(false)}>
