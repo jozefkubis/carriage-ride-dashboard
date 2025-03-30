@@ -10,10 +10,12 @@ const Img = (props) => {
   return <img className="h-24 w-auto rounded-xl" {...props} />;
 };
 
+const src = "/logo.png";
+
 function Logo() {
   return (
     <LogoDiv>
-      <Img src="/public/logo.png" alt="Logo" />
+      <Img src={src} alt="Logo" />
       <h1>Carriage Ride</h1>
     </LogoDiv>
   );
