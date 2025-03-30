@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { RowVertical } from "../../components/Rows";
-import Heading from "../../components/Heading";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import FileInput from "../../components/FileInput";
-import { SettingsForm } from "../../components/Forms";
 import FormRow from "../../components/FormRow";
+import { SettingsForm } from "../../components/Forms";
 import Input from "../../components/Input";
-import { useLanding } from "./useLanding";
 import Textarea from "../../components/Textarea";
+import { useLanding } from "./useLanding";
+import { useEditLanding } from "./useEditLanding";
 
 function LandingPageForm() {
   const { isLoading, landingPageData } = useLanding();
+  const { isEditing, editLanding } = useEditLanding();
 
-  // Lokálne stavy pre formulár
   const [updateHeader, setUpdateHeader] = useState("");
   const [updateText, setUpdateText] = useState("");
   const [updateImage, setUpdateImage] = useState(null);
 
-  // Aktualizácia stavu, keď sa načítajú dáta
   useEffect(() => {
     if (landingPageData) {
       setUpdateHeader(landingPageData.header || "");
@@ -28,7 +26,14 @@ function LandingPageForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log({ updateHeader, updateText, updateImage });
+    editLanding({
+      id: landingPageData.id,
+      updates: {
+        header: updateHeader,
+        text: updateText,
+        image: updateImage,
+      },
+    });
   }
 
   return (
@@ -39,17 +44,16 @@ function LandingPageForm() {
           value={updateHeader}
           onChange={(e) => setUpdateHeader(e.target.value)}
           id="header"
-          disabled={isLoading}
+          disabled={isLoading || isEditing}
         />
       </FormRow>
 
       <FormRow label="Text">
         <Textarea
-          type="text"
           value={updateText}
           onChange={(e) => setUpdateText(e.target.value)}
           id="text"
-          disabled={isLoading}
+          disabled={isLoading || isEditing}
         />
       </FormRow>
 
@@ -58,15 +62,19 @@ function LandingPageForm() {
           id="image"
           accept="image/*"
           onChange={(e) => setUpdateImage(e.target.files[0])}
-          disabled={isLoading}
+          disabled={isLoading || isEditing}
         />
       </FormRow>
 
       <FormRow>
-        <Button type="reset" variant="secondary" disabled={isLoading}>
+        <Button
+          type="reset"
+          variant="secondary"
+          disabled={isLoading || isEditing}
+        >
           Reset
         </Button>
-        <Button disabled={isLoading}>Aktualizovať údaje</Button>
+        <Button disabled={isLoading || isEditing}>Aktualizovať údaje</Button>
       </FormRow>
     </SettingsForm>
   );
