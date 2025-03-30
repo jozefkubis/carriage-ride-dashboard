@@ -77,15 +77,17 @@ function RideRow({ ride }) {
           <button
             onClick={() => setIsOpenModal((show) => !show)}
             disabled={isDeleting}
+            className="text-gray-500 transition hover:text-red-600"
           >
-            <FaPencil size={18} style={{ color: "gray" }} />
+            <FaPencil size={18} />
           </button>
 
           <button
             onClick={() => setIsOpenDeleteModal((show) => !show)}
             disabled={isDeleting}
+            className="text-gray-500 transition hover:text-red-600"
           >
-            <RiDeleteBin6Line size={18} style={{ color: "gray" }} />
+            <RiDeleteBin6Line size={18} />
           </button>
         </div>
       </Table.Row>
