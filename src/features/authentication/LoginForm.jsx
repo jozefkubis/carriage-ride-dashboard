@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Button from "../../components/Button";
 import { Form } from "../../components/Forms";
 import Input from "../../components/Input";
@@ -11,19 +11,24 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!email || !password) return;
-    login(
-      { email, password },
-      {
-        onSettled: () => {
-          setEmail("");
-          setPassword("");
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!email || !password) return;
+      login(
+        { email, password },
+        {
+          onSuccess: () => {
+            setEmail("");
+            setPassword("");
+          },
         },
-      },
-    );
-  }
+      );
+    },
+    [email, password, login],
+  );
+
+  const isSubmitDisabled = isLoading || !email || !password;
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -31,7 +36,6 @@ function LoginForm() {
         <Input
           type="email"
           id="email"
-          // This makes this form better for password managers
           autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -51,7 +55,7 @@ function LoginForm() {
       </FormRowVertical>
 
       <FormRowVertical>
-        <Button size="large" variant="primary">
+        <Button size="large" variant="primary" disabled={isSubmitDisabled}>
           {!isLoading ? "Prihlásiť sa" : <SpinnerMini />}
         </Button>
       </FormRowVertical>

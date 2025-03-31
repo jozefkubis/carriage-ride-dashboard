@@ -2,6 +2,10 @@ import { useUser } from "./useUser";
 
 function UserAvatar() {
   const { user } = useUser();
+
+  // Pridať kontrolu dostupnosti údajov ak je to potrebné
+  if (!user || !user.user_metadata) return null;
+
   const { fullName, avatar } = user.user_metadata;
 
   return (

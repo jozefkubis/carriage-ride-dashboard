@@ -4,6 +4,7 @@ import { SignUpForm } from "../../components/Forms";
 import FormRow from "../../components/FormRow";
 import Input from "../../components/Input";
 import { useSignup } from "./useSignup";
+import { useCallback } from "react";
 
 // Email regex: /\S+@\S+\.\S+/
 
@@ -12,9 +13,17 @@ function SignupForm() {
   const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
 
-  function onSubmit({ fullName, email, password }) {
-    signup({ fullName, email, password }, { onSettled: () => reset() });
-  }
+  const onSubmit = useCallback(
+    ({ fullName, email, password }) => {
+      signup(
+        { fullName, email, password },
+        {
+          onSettled: () => reset(),
+        },
+      );
+    },
+    [signup, reset],
+  );
 
   return (
     <SignUpForm onSubmit={handleSubmit(onSubmit)}>

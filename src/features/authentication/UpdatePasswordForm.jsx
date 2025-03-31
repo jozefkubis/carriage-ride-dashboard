@@ -1,25 +1,27 @@
+import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../components/Button";
 import { SettingsForm } from "../../components/Forms";
 import FormRow from "../../components/FormRow";
 import Input from "../../components/Input";
-
 import { useUpdateUser } from "./useUpdateUser";
 
 function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
   const { errors } = formState;
-
   const { updateUser, isUpdating } = useUpdateUser();
 
-  function onSubmit({ password }) {
-    updateUser(
-      { password },
-      {
-        onSuccess: () => reset(),
-      },
-    );
-  }
+  const onSubmit = useCallback(
+    ({ password }) => {
+      updateUser(
+        { password },
+        {
+          onSuccess: () => reset(),
+        },
+      );
+    },
+    [updateUser, reset],
+  );
 
   return (
     <SettingsForm onSubmit={handleSubmit(onSubmit)}>
@@ -55,6 +57,7 @@ function UpdatePasswordForm() {
           })}
         />
       </FormRow>
+
       <FormRow>
         <Button onClick={reset} type="reset" variant="secondary">
           Cancel

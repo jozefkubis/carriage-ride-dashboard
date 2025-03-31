@@ -10,7 +10,7 @@ import { useUser } from "./useUser";
 import { useUpdateUser } from "./useUpdateUser";
 
 function UpdateUserDataForm() {
-  // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
+  // Predpokladáme, že user už bol načítaný.
   const {
     user: {
       email,
@@ -23,9 +23,8 @@ function UpdateUserDataForm() {
 
   const { updateUser, isUpdating } = useUpdateUser();
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!fullName) return;
     updateUser(
       { fullName, avatar },
@@ -36,6 +35,11 @@ function UpdateUserDataForm() {
         },
       },
     );
+  };
+
+  function handleReset() {
+    setFullName(currentFullName);
+    setAvatar(null);
   }
 
   return (
@@ -44,7 +48,7 @@ function UpdateUserDataForm() {
         <Input value={email} disabled />
       </FormRow>
 
-      <FormRow label="Meno a priezvysko">
+      <FormRow label="Meno a priezvisko">
         <Input
           type="text"
           value={fullName}
@@ -64,7 +68,12 @@ function UpdateUserDataForm() {
       </FormRow>
 
       <FormRow>
-        <Button type="reset" variant="secondary" disabled={isUpdating}>
+        <Button
+          type="reset"
+          variant="secondary"
+          disabled={isUpdating}
+          onClick={handleReset}
+        >
           Reset
         </Button>
         <Button disabled={isUpdating}>Aktualizovať údaje</Button>
