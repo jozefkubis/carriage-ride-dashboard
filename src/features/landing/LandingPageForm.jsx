@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Button from "../../components/Button";
 import FileInput from "../../components/FileInput";
 import FormRow from "../../components/FormRow";
@@ -24,20 +24,33 @@ function LandingPageForm() {
     }
   }, [landingPageData]);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    editLanding({
-      id: landingPageData.id,
-      updates: {
-        header: updateHeader,
-        text: updateText,
-        image: updateImage,
-      },
-    });
-  }
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!landingPageData) return;
+      editLanding({
+        id: landingPageData.id,
+        updates: {
+          header: updateHeader,
+          text: updateText,
+          image: updateImage,
+        },
+      });
+    },
+    [editLanding, landingPageData, updateHeader, updateText, updateImage],
+  );
+
+  // Handler, ktorý po resetovaní obnoví hodnoty z landingPageData
+  const handleReset = useCallback(() => {
+    if (landingPageData) {
+      setUpdateHeader(landingPageData.header || "");
+      setUpdateText(landingPageData.text || "");
+      setUpdateImage(landingPageData.image || null);
+    }
+  }, [landingPageData]);
 
   return (
-    <SettingsForm onSubmit={handleSubmit}>
+    <SettingsForm onSubmit={handleSubmit} onReset={handleReset}>
       <FormRow label="Header">
         <Input
           type="text"
