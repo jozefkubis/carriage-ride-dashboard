@@ -1,32 +1,33 @@
-import BookingDataBox from "./BookingDataBox";
-import { RowHorizontal, RowVertical } from "../../components/Rows";
-import Heading from "../../components/Heading";
-import Tag from "../../components/Tag";
-import ButtonGroup from "../../components/ButtonGroup";
 import Button from "../../components/Button";
+import ButtonGroup from "../../components/ButtonGroup";
 import ButtonText from "../../components/ButtonText";
+import Heading from "../../components/Heading";
+import { RowHorizontal } from "../../components/Rows";
+import Tag from "../../components/Tag";
+import BookingDataBox from "./BookingDataBox";
 
+import { useState } from "react";
+import ConfirmDelete from "../../components/ConfirmDelete";
+import Modal from "../../components/Modal";
+import Spinner from "../../components/Spinner";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "./useBooking";
-import Spinner from "../../components/Spinner";
-import usePayInBooking from "./usePayInBooking";
 import { useDeleteBooking } from "./useDeleteBooking";
-import { useState } from "react";
-import Modal from "../../components/Modal";
-import ConfirmDelete from "../../components/ConfirmDelete";
+import usePayInBooking from "./usePayInBooking";
 
 function BookingDetail() {
   const { booking, isLoading } = useBooking();
   const { payInBooking, isPayingIn } = usePayInBooking();
   const { deleteBooking, isDeleting } = useDeleteBooking();
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
-
   const moveBack = useMoveBack();
 
   if (isLoading) return <Spinner />;
+
   const status = booking.isPaid ? "zaplatené" : "nezaplatené";
 
-  const statusToTagName = {
+  // Mapa pre priradenie typu tagu na základe statusu platby
+  const statusToTagType = {
     true: "success",
     false: "secondary",
   };
@@ -37,15 +38,12 @@ function BookingDetail() {
 
   return (
     <div className="mx-auto mt-10 max-w-5xl">
-      <RowHorizontal
-        type="horizontal"
-        className="flex items-center justify-between"
-      >
+      <RowHorizontal className="flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Heading type="h1">
             Rezervácia #{booking.id} → {booking.cride.name}
           </Heading>
-          <Tag type={statusToTagName[booking.isPaid]}>
+          <Tag type={statusToTagType[booking.isPaid]}>
             {status.replace("-", " ")}
           </Tag>
         </div>
@@ -59,12 +57,12 @@ function BookingDetail() {
           disabled={isDeleting}
           variant="danger"
           size="medium"
-          onClick={() => setIsOpenDeleteModal((show) => !show)}
+          onClick={() => setIsOpenDeleteModal(true)}
         >
           Vymazať rezerváciu #{booking.id}
         </Button>
 
-        {booking.isPaid === false && (
+        {!booking.isPaid && (
           <Button disabled={isPayingIn} onClick={handlePaying}>
             Zaplať rezerváciu #{booking.id}
           </Button>
@@ -79,7 +77,10 @@ function BookingDetail() {
         <Modal onClose={() => setIsOpenDeleteModal(false)}>
           <ConfirmDelete
             resourceName="rezerváciu"
-            onConfirm={() => deleteBooking(booking.id)}
+            onConfirm={() => {
+              deleteBooking(booking.id);
+              setIsOpenDeleteModal(false);
+            }}
             disabled={isDeleting}
             onClose={() => setIsOpenDeleteModal(false)}
           />

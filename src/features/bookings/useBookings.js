@@ -7,32 +7,37 @@ export function useBookings() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
-  // Pagination
-  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  // Získanie aktuálnej stránky; ak nie je definovaná, použije sa stránka 1.
+  const currentPage = Number(searchParams.get("page")) || 1;
 
   const {
     isLoading,
     data: { data: bookings, count } = {},
     error,
   } = useQuery({
-    queryKey: ["bookings", page],
-    queryFn: () => getBookings({ page }),
+    queryKey: ["bookings", currentPage],
+    queryFn: () => getBookings({ page: currentPage }),
   });
 
-  // Prefetching
-  const pageCount = Math.ceil(count / PAGE_SIZE);
+  // Celkový počet záznamov (fallback na 0, ak nie je k dispozícii)
+  const totalCount = count || 0;
+  const pageCount = Math.ceil(totalCount / PAGE_SIZE);
 
-  if (page < pageCount)
+  // Prefetchovanie nasledujúcej stránky, ak existuje
+  if (currentPage < pageCount) {
     queryClient.prefetchQuery({
-      queryKey: ["bookings", page + 1],
-      queryFn: () => getBookings({ page: page + 1 }),
+      queryKey: ["bookings", currentPage + 1],
+      queryFn: () => getBookings({ page: currentPage + 1 }),
     });
+  }
 
-  if (page > 1)
+  // Prefetchovanie predchádzajúcej stránky, ak existuje
+  if (currentPage > 1) {
     queryClient.prefetchQuery({
-      queryKey: ["bookings", page - 1],
-      queryFn: () => getBookings({ page: page - 1 }),
+      queryKey: ["bookings", currentPage - 1],
+      queryFn: () => getBookings({ page: currentPage - 1 }),
     });
+  }
 
-  return { isLoading, bookings, error, count, page };
+  return { isLoading, bookings, error, count, page: currentPage };
 }

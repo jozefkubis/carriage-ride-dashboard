@@ -9,8 +9,6 @@ import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
 
 function BookingDataBox({ booking }) {
   const {
-    id: bookingId,
-    guestId,
     isPaid,
     created_at,
     date,
@@ -20,20 +18,25 @@ function BookingDataBox({ booking }) {
     fullName,
     phone,
     email,
-    cride: { name: rideName, regularPrice: ridePrice, discount: rideDiscount },
+    cride: { regularPrice: ridePrice, discount: rideDiscount },
   } = booking;
 
+  // Vypočítame celkovú cenu a formátujeme čas jazdy
   const totalPrice = ridePrice - rideDiscount;
   const rideTime = time.split(":").slice(0, 2).join(":");
-  // const status = isPaid ? "zaplatené" : "nezaplatené";
+
+  // Formátovanie dátumu a vzdialenosti od dnešného dňa
+  const formattedDate = format(new Date(date), "EEE, d. MMM yyyy", {
+    locale: sk,
+  });
+  const distanceFromNow = formatDistanceFromNow(date);
 
   return (
     <section className="my-10 overflow-hidden rounded-md border border-gray-200 bg-gray-50">
       {/* HEADER */}
       <header className="flex items-center justify-between bg-indigo-500 px-10 py-5 text-[1.8rem] font-medium text-indigo-100">
         <p>
-          {format(new Date(date), "EEE, d. MMM yyyy", { locale: sk })} (
-          {formatDistanceFromNow(date)}) {rideTime}
+          {formattedDate} ({distanceFromNow}) {rideTime}
         </p>
       </header>
 
@@ -43,9 +46,8 @@ function BookingDataBox({ booking }) {
         <div className="mb-6 flex items-center gap-4 text-gray-500">
           <p className="font-medium text-gray-700 dark:text-gray-200">
             👬 {fullName}{" "}
-            {numGuests > 1
-              ? `+ ${numGuests - 1} ${numGuests === 2 ? "hosť" : "hostia"}`
-              : ""}
+            {numGuests > 1 &&
+              `+ ${numGuests - 1} ${numGuests === 2 ? "hosť" : "hostia"}`}
           </p>
           <span>→</span>
           <a
@@ -54,7 +56,6 @@ function BookingDataBox({ booking }) {
           >
             <span className="text-2xl">📧</span> {email}
           </a>
-          {/* Klikateľné telefónne číslo */}
           <a
             href={`tel:${phone}`}
             className="text-indigo-600 hover:text-indigo-800"
@@ -64,27 +65,18 @@ function BookingDataBox({ booking }) {
         </div>
 
         {/* Observations */}
-        {notes ? (
-          <DataItem
-            icon={<HiOutlineChatBubbleBottomCenterText />}
-            label="Poznámky"
-          >
-            {notes}
-          </DataItem>
-        ) : (
-          <DataItem
-            icon={<HiOutlineChatBubbleBottomCenterText />}
-            label="Poznámky"
-          >
-            <p className="text-gray-500">"Žiadne poznámky"</p>
-          </DataItem>
-        )}
+        <DataItem
+          icon={<HiOutlineChatBubbleBottomCenterText />}
+          label="Poznámky"
+        >
+          {notes ? notes : <p className="text-gray-500">"Žiadne poznámky"</p>}
+        </DataItem>
 
         {/* PRICE BOX */}
         <div
           className={clsx(
             "mt-6 flex items-center justify-between rounded-sm px-8 py-4",
-            isPaid === true
+            isPaid
               ? "bg-green-100 text-green-700"
               : "bg-yellow-100 text-yellow-700",
           )}
@@ -93,7 +85,7 @@ function BookingDataBox({ booking }) {
             {formatCurrency(totalPrice)}
           </DataItem>
           <p className="text-[1.4rem] font-semibold uppercase">
-            {isPaid === true ? "Zaplatené" : "Nezaplatené"}
+            {isPaid ? "Zaplatené" : "Nezaplatené"}
           </p>
         </div>
       </section>
