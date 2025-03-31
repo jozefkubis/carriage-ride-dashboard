@@ -5,19 +5,20 @@ import Modal from "../../components/Modal";
 
 export default function AddRide() {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const handleCloseModal = () => setIsOpenModal(false);
 
   return (
     <div>
       <Button
         size="large"
         variant="primary"
-        onClick={() => setIsOpenModal((show) => !show)}
+        onClick={() => setIsOpenModal((prev) => !prev)}
       >
         Pridaj novú jazdu
       </Button>
       {isOpenModal && (
-        <Modal onClose={() => setIsOpenModal(false)}>
-          <CreateRideForm onClose={() => setIsOpenModal(false)} />
+        <Modal onClose={handleCloseModal}>
+          <CreateRideForm onClose={handleCloseModal} />
         </Modal>
       )}
     </div>

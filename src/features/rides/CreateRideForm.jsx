@@ -19,36 +19,31 @@ function CreateRideForm({ rideToEdit = {}, onClose }) {
   const isEditSession = Boolean(editId);
   const { isCreating, createRide } = useCreateRide();
   const { isEditing, editRide } = useEditRide();
-
   const isWorking = isCreating || isEditing;
+
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
   });
   const { errors } = formState;
 
+  // Spoločná funkcia pre úspešné odoslanie formulára
+  const handleSuccess = () => {
+    reset();
+    onClose?.();
+  };
+
   function onSubmit(data) {
+    // Spracovanie obrázka: ak ide o reťazec, ponecháme ho, inak vezmeme prvý súbor
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
-    if (isEditSession)
+    if (isEditSession) {
       editRide(
         { newRideData: { ...data, image }, id: editId },
-        {
-          onSuccess: () => {
-            reset();
-            onClose?.();
-          },
-        },
+        { onSuccess: handleSuccess },
       );
-    else
-      createRide(
-        { ...data, image: image },
-        {
-          onSuccess: () => {
-            reset();
-            onClose?.();
-          },
-        },
-      );
+    } else {
+      createRide({ ...data, image }, { onSuccess: handleSuccess });
+    }
   }
 
   function onError(error) {
@@ -84,8 +79,8 @@ function CreateRideForm({ rideToEdit = {}, onClose }) {
           {...register("discount", {
             required: "Toto pole je povinné",
             validate: (value) =>
-              value < getValues().regularPrice ||
-              "Zľava nemôže byť viac ako 100% z ceny",
+              Number(value) < Number(getValues().regularPrice) ||
+              "Zľava nemôže byť viac ako cena",
           })}
         />
       </FormRow>
@@ -109,8 +104,9 @@ function CreateRideForm({ rideToEdit = {}, onClose }) {
       </FormRow>
 
       <ButtonRow>
+        {/* Zvážte premenovanie tlačidla na Cancel, ak zamýšľate zatvoriť modal */}
         <Button variant="secondary" type="reset" onClick={() => onClose?.()}>
-          Reset
+          Zrušiť
         </Button>
         <Button disabled={isWorking} type="submit">
           {isEditSession ? "Uprav jazdu" : "Pridaj jazdu"}
