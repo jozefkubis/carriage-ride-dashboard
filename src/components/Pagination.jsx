@@ -44,15 +44,17 @@ function Pagination({ count }) {
   const pageCount = Math.ceil(count / PAGE_SIZE);
 
   function nextPage() {
+    const newSearchParams = new URLSearchParams(searchParams);
     const next = currentPage === pageCount ? currentPage : currentPage + 1;
-    searchParams.set("page", next);
-    setSearchParams(searchParams);
+    newSearchParams.set("page", next);
+    setSearchParams(newSearchParams);
   }
 
   function prevPage() {
+    const newSearchParams = new URLSearchParams(searchParams);
     const prev = currentPage === 1 ? currentPage : currentPage - 1;
-    searchParams.set("page", prev);
-    setSearchParams(searchParams);
+    newSearchParams.set("page", prev);
+    setSearchParams(newSearchParams);
   }
 
   if (pageCount <= 1) return null;
@@ -68,12 +70,17 @@ function Pagination({ count }) {
       </P>
 
       <Buttons>
-        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
+        <PaginationButton
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          aria-label="Predošlá strana"
+        >
           <HiChevronLeft /> <span>Predošlá strana</span>
         </PaginationButton>
         <PaginationButton
           onClick={nextPage}
           disabled={currentPage === pageCount}
+          aria-label="Nasledujúca strana"
         >
           <span>Nasledujúca strana</span> <HiChevronRight />
         </PaginationButton>

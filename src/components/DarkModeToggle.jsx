@@ -3,10 +3,19 @@ import ButtonIcon from "./ButtonIcon";
 import { useEffect, useState } from "react";
 
 function DarkModeToggle() {
-  // Načítať darkMode zo storage alebo použiť predvolené nastavenie
-  const [darkMode, setDarkMode] = useState(
-    () => localStorage.getItem("darkMode") === "true",
-  );
+  const getInitialDarkMode = () => {
+    if (typeof window !== "undefined") {
+      // Ak je vo localStorage hodnota, použijeme ju; inak preferujeme system preferenciu.
+      const localValue = localStorage.getItem("darkMode");
+      if (localValue !== null) {
+        return localValue === "true";
+      }
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+    return false;
+  };
+
+  const [darkMode, setDarkMode] = useState(getInitialDarkMode);
 
   useEffect(() => {
     if (darkMode) {
